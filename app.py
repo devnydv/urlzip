@@ -18,6 +18,10 @@ def login():
 def user():
     return render_template("user.html")
 
+@app.route("/edit")
+def edit():
+    return render_template("editp.html")
+
 if __name__=="__main__":
     app.run(debug=True)
 

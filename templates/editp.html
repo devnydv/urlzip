@@ -5,7 +5,7 @@
   <!-- <base href="https://urlkeepr.net/edit-profile"> -->
   <title>UrlKeepr - Edit Profile</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/editp.css">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/editp.css')}}">
 
 </head>
 
@@ -57,7 +57,7 @@
       <button type="submit">Save Changes</button>
     </form>
 
-    <a href="/dashboard" class="back-link">Back to Dashboard</a>
+    <a href="/user" class="back-link">Back to Dashboard</a>
   </div>
 
   <script>
@@ -83,7 +83,7 @@
         // For this example, we'll just show an alert
         alert('Profile updated successfully!');
         // Redirect to dashboard after successful update
-        window.location.href = '/';
+        window.location.href = '/user';
       });
     });
   </script>
