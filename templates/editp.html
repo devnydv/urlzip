@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- <base href="https://urlkeepr.net/edit-profile"> -->
+  <title>UrlKeepr - Edit Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/editp.css">
+
+</head>
+
+<body>
+  <div class="container">
+    <h1>Edit Your Profile</h1>
+
+    <form class="profile-form" action="/update-profile" method="POST">
+      <div class="profile-picture">
+        <img src="profile.jpg" alt="Current profile picture" width="100" height="100">
+        <input type="file" id="profile-pic" accept="image/*">
+        <label for="profile-pic">Change Picture</label>
+      </div>
+
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" value="Sarah Johnson" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" value="sarah.johnson@example.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="bio">Bio</label>
+        <textarea id="bio" name="bio"
+          rows="4">Web developer and avid bookmarker. Always looking for new and interesting websites to explore and save.</textarea>
+      </div>
+      <div class="form-group">
+        <label for="website">Personal Website</label>
+        <input type="text" id="website" name="website" value="https://sarahjohnson.dev">
+      </div>
+      <!-- <div class="form-group">
+        <label for="location">Location</label>
+        <input type="text" id="location" name="location" value="San Francisco, CA">
+      </div>
+
+      <div class="form-group">
+        <label for="twitter">Twitter Username</label>
+        <input type="text" id="twitter" name="twitter" value="@sarahcodes">
+      </div>
+
+      <div class="form-group">
+        <label for="github">GitHub Username</label>
+        <input type="text" id="github" name="github" value="sarahj-dev">
+      </div> -->
+
+      <button type="submit">Save Changes</button>
+    </form>
+
+    <a href="/dashboard" class="back-link">Back to Dashboard</a>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.querySelector('.profile-form');
+      const fileInput = document.getElementById('profile-pic');
+      const profileImage = document.querySelector('.profile-picture img');
+
+      fileInput.addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            profileImage.src = e.target.result;
+          }
+          reader.readAsDataURL(file);
+        }
+      });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        // Here you would typically send the form data to your backend
+        // For this example, we'll just show an alert
+        alert('Profile updated successfully!');
+        // Redirect to dashboard after successful update
+        window.location.href = '/';
+      });
+    });
+  </script>
+</body>
+
+</html>

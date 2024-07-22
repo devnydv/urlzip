@@ -1,0 +1,156 @@
+<html>
+
+<head>
+  <!-- <base href="https://urlkeepr.net/"> -->
+  <title>UrlKeepr - Your Personal URL Organizer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">UrlKeepr</div>
+        <button class="menu-toggle" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="nav-links">
+          <a href="#features">Features</a>
+          <a href="#how-it-works">How it Works</a>
+          <a href="#use-cases">Use Cases</a>
+          <a href="/login">Login</a>
+          <a href="/signup">Sign Up</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Organize Your Online World</h1>
+        <p>UrlKeepr helps you save, organize, and access your favorite websites with ease.</p>
+        <a href="/signup" class="cta-button">Get Started for Free</a>
+      </div>
+    </section>
+
+    <section id="features" class="features">
+      <div class="container">
+        <h2>Features</h2>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <div class="feature-icon">&#128278;</div>
+            <h3>Easy Bookmarking</h3>
+            <p>Save URLs with a single click using our browser extension.</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">&#128193;</div>
+            <h3>Smart Categories</h3>
+            <p>Organize your bookmarks with custom categories and tags.</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">&#128241;</div>
+            <h3>Access Anywhere</h3>
+            <p>Sync your bookmarks across all your devices seamlessly.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="how-it-works" class="how-it-works">
+      <div class="container">
+        <h2>How It Works</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Sign Up</h3>
+            <p>Create your free account in seconds.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Save URLs</h3>
+            <p>Add websites you want to remember.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Organize</h3>
+            <p>Categorize and tag your bookmarks.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases" class="use-cases">
+      <div class="container">
+        <h2>Use Cases</h2>
+        <div class="use-case-grid">
+          <div class="use-case-item">
+            <div class="use-case-icon">&#128218;</div>
+            <h3>Research</h3>
+            <p>Easily organize and access academic papers, articles, and research materials for your projects.</p>
+          </div>
+          <div class="use-case-item">
+            <div class="use-case-icon">&#128187;</div>
+            <h3>Web Development</h3>
+            <p>Keep track of useful documentation, tools, and resources for your coding projects.</p>
+          </div>
+          <div class="use-case-item">
+            <div class="use-case-icon">&#127891;</div>
+            <h3>Education</h3>
+            <p>Compile and categorize learning materials, online courses, and educational resources.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2023 UrlKeepr. All rights reserved. | <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms of
+          Service</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Toggle menu functionality
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('nav')) {
+        navLinks.classList.remove('active');
+      }
+    });
+
+    // Simple form validation for demo purposes
+    const signupForm = document.querySelector('form');
+    if (signupForm) {
+      signupForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        // Add your form validation and submission logic here
+        alert('Thank you for signing up! (This is a demo - no actual account is created)');
+      });
+    }
+  </script>
+</body>
+
+</html>

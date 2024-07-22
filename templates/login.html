@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <!-- <base href="https://urlkeepr.net/log-in"> -->
+  <title>UrlKeepr - Log In</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/logon.css')}}">
+</head>
+
+<body>
+  <div class="container">
+    <div class="logo">
+      <img src="urlkeepr-logo.png" alt="UrlKeepr logo" width="150" height="50">
+    </div>
+
+    <h1>Log In to UrlKeepr</h1>
+
+    <form class="login-form" action="/auth" method="POST">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+
+      <button type="submit">Log In</button>
+
+      <div class="form-footer">
+        <a href="/forgot-password">Forgot password?</a>
+      </div>
+    </form>
+
+    <!-- <div class="social-login">
+    <p>Or log in with:</p>
+    <div class="social-buttons">
+      <button class="social-button">
+        <img src="google-icon.png" alt="Google logo" width="24" height="24"> Google
+      </button>
+      <button class="social-button">
+        <img src="github-icon.png" alt="GitHub logo" width="24" height="24"> GitHub
+      </button>
+    </div>
+  </div> -->
+
+    <div class="form-footer">
+      <p>Don't have an account? <a href="/signup">Sign up</a></p>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.querySelector('.login-form');
+      const emailInput = document.getElementById('email');
+      const passwordInput = document.getElementById('password');
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Basic form validation
+        if (emailInput.value.trim() === '' || passwordInput.value.trim() === '') {
+          alert('Please fill in all fields');
+          return;
+        }
+
+        // Here you would typically send the login request to your backend
+        // For this example, we'll just simulate a successful login
+        setTimeout(() => {
+          alert('Login successful!');
+          window.location.href = '/dashboard';
+        }, 1000);
+      });
+
+      // Social login buttons
+      const socialButtons = document.querySelectorAll('.social-button');
+      socialButtons.forEach(button => {
+        button.addEventListener('click', function () {
+          const provider = this.textContent.trim();
+          alert(`Logging in with ${provider}...`);
+          // Here you would implement the actual social login logic
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>
