@@ -4,8 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <!-- <base href="https://urlkeepr.net/sign-up"> -->
-  <title>UrlKeepr - Sign Up</title>
+  <title>Urljar - Sign Up</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords" content="signup for urljar">
+  <meta name="description" content="Signup for urljar the one hub to save all your urls.">
   <link rel="stylesheet" href="{{url_for('static', filename='css/logon.css')}}">
 </head>
 
@@ -16,30 +18,41 @@
     </div>
 
     <h1>Sign Up for UrlKeepr</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="" id="alertdiv">
+        {% for category, message in messages %}
+        <div class="alert"><span>{{ message }}</span></div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
 
-    <form class="signup-form login-form" action="/register" method="POST">
+    <form class="signup-form login-form" action="/signup" method="POST">
       <div class="form-group">
-        <label for="name">Username</label>
-        <input type="text" id="name" name="name" required>
-      </div>
+        <label for="name">Username*</label>
+        <input type="text" id="username" name="username" placeholder="Username" required>
 
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
-      </div>
-      <div class="form-group">
-        <label for="bio">Bio</label>
-        <textarea id="bio" name="bio"
-          rows="4"></textarea>
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required>
+
       </div>
 
       <div class="form-group">
-        <label for="confirm-password">Confirm Password</label>
-        <input type="password" id="confirm-password" name="confirm-password" required>
+        <label for="email">Email*</label>
+        <input type="email" id="email" name="email" placeholder="Email" required>
+      </div>
+      <div class="form-group">
+        <label for="bio">Description</label>
+        <textarea id="bio" name="bio" rows="4"
+          placeholder="Some details about your page(The Username and details will be visible in the profile)"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="password">Password*</label>
+        <input type="password" id="password" name="password" placeholder="Password" required>
+      </div>
+
+      <div class="form-group">
+        <label for="confirm_password">Confirm Password*</label>
+        <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
       </div>
 
       <button type="submit">Create Account</button>
@@ -61,8 +74,14 @@
       <p>Already have an account? <a href="/login">Log in</a></p>
     </div>
   </div>
-
-  <script>
+<script>
+  function removeAlert(){
+    let alertdiv = document.getElementById("alertdiv").remove()
+  }
+  setTimeout(removeAlert, 5000);
+ 
+</script>
+  <!-- <script>
     document.addEventListener('DOMContentLoaded', function () {
       const form = document.querySelector('.signup-form');
       const nameInput = document.getElementById('name');
@@ -103,7 +122,8 @@
         });
       });
     });
-  </script>
+  </script> -->
 </body>
+
 
 </html>
