@@ -24,3 +24,10 @@ def userlogin(uname, password):
 
 def signup():
     collection.insert_one()
+
+def userexist(uname):
+    user = list(collection.find({"username": uname}))
+    if user == []:
+        return {"massage":"username is Unique", "case":True}
+    else: 
+        return {"massage":"username is already taken", "case":False}

@@ -1,6 +1,6 @@
 from flask import Flask , render_template, flash, redirect, url_for, request
 from forms import SignupForm, LoginForm
-from db import userlogin
+from db import userlogin, signup, userexist
 
 app = Flask(__name__)
 app.secret_key ="doNotTryToSuck"
@@ -57,6 +57,13 @@ def edit():
 
 @app.route("/user")
 def user():
+    return render_template("user.html")
+
+#api routes
+@app.route("/username")
+def user_exist():
+    #pass username that will be sent through get request
+    #checkuser = userexist()
     return render_template("user.html")
 
 if __name__=="__main__":
