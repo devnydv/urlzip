@@ -30,7 +30,7 @@
 
     <form class="signup-form login-form" action="/signup" method="POST">
       <div class="form-group">
-        <label for="name">Username*</label>
+        <label for="username">Username*</label>
         <input type="text" id="username" name="username" placeholder="Username" required>
 
 
@@ -43,7 +43,7 @@
       <div class="form-group">
         <label for="bio">Description</label>
         <textarea id="bio" name="bio" rows="4"
-          placeholder="Some details about your page(The Username and details will be visible in the profile)"></textarea>
+          placeholder="Some details about your page under 300 characters(The Username and details will be visible in the profile)."></textarea>
       </div>
       <div class="form-group">
         <label for="password">Password*</label>
@@ -74,13 +74,13 @@
       <p>Already have an account? <a href="/login">Log in</a></p>
     </div>
   </div>
-<script>
-  function removeAlert(){
-    let alertdiv = document.getElementById("alertdiv").remove()
-  }
-  setTimeout(removeAlert, 5000);
- 
-</script>
+  <script>
+    function removeAlert(){
+      let alertdiv = document.getElementById("alertdiv").remove()
+    }
+    setTimeout(removeAlert, 5000);
+   
+  </script>
   <!-- <script>
     document.addEventListener('DOMContentLoaded', function () {
       const form = document.querySelector('.signup-form');

@@ -1,5 +1,6 @@
 from flask import Flask , render_template, flash, redirect, url_for, request
-from forms import UserForm
+from forms import SignupForm, LoginForm
+from db import userlogin
 
 app = Flask(__name__)
 app.secret_key ="doNotTryToSuck"
@@ -7,15 +8,17 @@ app.secret_key ="doNotTryToSuck"
 def home():
     return render_template("index.html")
 
+
+
 #handle signup page 
 @app.route("/signup", methods=["GET", 'POST'])
 def signup():
     if request.method == "POST":
-        form = UserForm(request.form)
+        form = SignupForm(request.form)
         if form.validate():
             # Handle form submission, e.g., save user data
+            print(request.form['username'])
             
-            flash('Registration successful!', 'success')
             return redirect(url_for('login'))
         else:
             for field, errors in form.errors.items():
@@ -26,8 +29,26 @@ def signup():
         return render_template("signup.html", form=form)
     return render_template("signup.html")
 
-@app.route("/login")
+
+
+@app.route("/login", methods=["GET", 'POST'])
 def login():
+    if request.method == "POST":
+        form = LoginForm(request.form)
+        if form.validate():
+            # Handle form submission, e.g., save user data
+            logindata = userlogin(request.form["username"], request.form["password"])
+            
+            if logindata['case']:
+                return redirect(url_for('user'))
+            else:
+                flash(logindata['massage'], 'success')
+                
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    flash(f"Error in {getattr(form, field).label.text}: {error}", 'danger')
+        return render_template("login.html")
     return render_template("login.html")
 
 @app.route("/edit")
