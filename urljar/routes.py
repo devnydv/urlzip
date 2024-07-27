@@ -84,8 +84,8 @@ def user(username):
     sessionuname = session["username"]
     if username == sessionuname:
         return render_template("dashboard.html", username = sessionuname)
-    else:
-        return render_template("profile.html", username=username )
+    #check whether the user exists in the db kr not and then.
+    return render_template("profile.html", username=username )
 
 #api routes
 @app.route("/username")
