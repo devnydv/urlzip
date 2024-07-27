@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <!-- <base href="https://urlkeepr.net/dashboard"> -->
+  <title>UrlKeepr - Your Dashboard (Dark Mode)</title>
+  <meta name="description" content="Home page of link jar">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/user.css')}}">
+
+</head>
+
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="profile">
+        <img class="profile-image" src="profile.jpg" alt="User profile picture, smiling person with short dark hair"
+          width="60" height="60">
+        <div class="profile-info">
+          <h1> {{username}}</h1>
+          <p>Web developer and avid bookmarker </p>
+          <a href="#">httpa://mastiflicks.site &#128279;</a>
+        </div>
+      </div>
+      <div class="header-buttons">
+        <!-- <a class="edit-btn" href="/edit"> Edit</a> -->
+        <a class="logout-btn" href="/login">Logout</a>
+        <button class="share-btn">Share&#128279;</button>
+        <a href="#"></a>
+      </div>
+    </header>
+
+    <section class="category-section">
+      
+      <div class="category-buttons">
+        <button class="category-btn active" data-category="all">All</button>
+        <button class="category-btn" data-category="work">Work</button>
+        <button class="category-btn" data-category="entertainment">Entertainment</button>
+        <button class="category-btn" data-category="education">Education</button>
+        <button class="category-btn" data-category="personal">Personal</button>
+      </div>
+      
+    </section>
+
+    <main class="url-cards">
+      <div class="url-card" data-category="work">
+        <h3>StackOverflow</h3>
+        <div class="url-link">
+          <a href="https://stackoverflow.com">stackoverflow.com</a>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <p>Developer Q&A forum</p>
+        <div class="url-card-buttons">
+          <button class="share-icon" title="Share this URL">&#128279;</button>
+          <!-- <button class="edit-icon" title="Edit this URL">&#9998;</button>
+          <button class="delete-icon" title="Delete this URL">&#128465;</button> -->
+        </div>
+      </div>
+      <div class="url-card" data-category="work">
+        <h3>GitHub</h3>
+        <div class="url-link">
+          <a href="https://github.com">github.com</a>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <p>Code repository and version control</p>
+        <div class="url-card-buttons">
+          <button class="share-icon" title="Share this URL">&#128279;</button>
+          <!-- <button class="edit-icon" title="Edit this URL">&#9998;</button>
+          <button class="delete-icon" title="Delete this URL">&#128465;</button> -->
+        </div>
+      </div>
+      <div class="url-card" data-category="entertainment">
+        <h3>Netflix</h3>
+        <div class="url-link">
+          <a href="https://netflix.com">netflix.com</a>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <p>Streaming service for movies and TV shows</p>
+        <div class="url-card-buttons">
+          <button class="share-icon" title="Share this URL">&#128279;</button>
+          <!-- <button class="edit-icon" title="Edit this URL">&#9998;</button>
+          <button class="delete-icon" title="Delete this URL">&#128465;</button> -->
+        </div>
+      </div>
+      <div class="url-card" data-category="entertainment">
+        <h3>Spotify</h3>
+        <div class="url-link">
+          <a href="https://spotify.com">spotify.com</a>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <p>Music streaming platform</p>
+        <div class="url-card-buttons">
+          <button class="share-icon" title="Share this URL">&#128279;</button>
+          <!-- <button class="edit-icon" title="Edit this URL">&#9998;</button>
+          <button class="delete-icon" title="Delete this URL">&#128465;</button> -->
+        </div>
+      </div>
+      <div class="url-card" data-category="education">
+        <h3>Coursera</h3>
+        <div class="url-link">
+          <a href="https://coursera.org">coursera.org</a>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <p>Online learning platform</p>
+        <div class="url-card-buttons">
+          <button class="share-icon" title="Share this URL">&#128279;</button>
+          <!-- <button class="edit-icon" title="Edit this URL">&#9998;</button>
+          <button class="delete-icon" title="Delete this URL">&#128465;</button> -->
+        </div>
+      </div>
+      <div class="url-card" data-category="personal">
+        <h3>Pinterest</h3>
+        <div class="url-link">
+          <a href="https://pinterest.com">pinterest.com</a>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <p>Visual discovery engine for finding ideas</p>
+        <div class="url-card-buttons">
+          <button class="share-icon" title="Share this URL">&#128279;</button>
+          <!-- <button class="edit-icon" title="Edit this URL">&#9998;</button>
+          <button class="delete-icon" title="Delete this URL">&#128465;</button> -->
+        </div>
+      </div>
+      <div class="url-card" data-category="entertainment">
+        <h3>New Site</h3>
+        <div class="url-link">
+          <a href="https://www.imdb.com/title/tt30970235/">www.imdb.com/title/tt30970235/</a>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <p>This is IMDb</p>
+        <div class="url-card-buttons">
+          <button class="share-icon" title="Share this URL">&#128279;</button>
+          <!-- <button class="edit-icon" title="Edit this URL">&#9998;</button>
+          <button class="delete-icon" title="Delete this URL">&#128465;</button> -->
+        </div>
+      </div>
+    </main>
+
+    <!-- <div class="add-new-btn-container">
+      <button class="add-new-btn">Add New URL</button>
+    </div> -->
+  </div>
+
+
+    
+
+  <footer>
+    <p>UrlKeepr - Your Personal URL Library | <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms of
+        Service</a></p>
+  </footer>
+
+  <!-- <div id="editModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form class="edit-form">
+        <h2>Edit URL</h2>
+        <input type="text" id="editTitle" placeholder="Title" required>
+        <input type="url" id="editUrl" placeholder="URL" required>
+        <textarea id="editDescription" placeholder="Short description" rows="3"></textarea>
+        <select id="editCategory" required>
+          <option value="">Select Category</option>
+          <option value="work">Work</option>
+          <option value="entertainment">Entertainment</option>
+          <option value="education">Education</option>
+          <option value="personal">Personal</option>
+        </select>
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="addModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form class="edit-form">
+        <h2>Add New URL</h2>
+        <input type="text" id="newTitle" placeholder="Title" required>
+        <input type="url" id="newUrl" placeholder="URL" required>
+        <textarea id="newDescription" placeholder="Short description" rows="3"></textarea>
+        <select id="newCategory" required>
+          <option value="">Select Category</option>
+          <option value="work">Work</option>
+          <option value="entertainment">Entertainment</option>
+          <option value="education">Education</option>
+          <option value="personal">Personal</option>
+        </select>
+        <button type="submit">Add URL</button>
+      </form>
+    </div>
+  </div> -->
+
+
+  <!-- <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const categoryButtons = document.querySelectorAll('.category-btn');
+      const urlCards = document.querySelectorAll('.url-card');
+      const addCategoryBtn = document.querySelector('.add-category-btn');
+      const newCategoryInput = document.querySelector('.new-category-input');
+      const newCategoryNameInput = document.getElementById('newCategoryName');
+      const submitNewCategoryBtn = document.getElementById('submitNewCategory');
+      const shareProfileBtn = document.querySelector('.share-btn');
+      const shareIcons = document.querySelectorAll('.share-icon');
+      const editIcons = document.querySelectorAll('.edit-icon');
+      const deleteIcons = document.querySelectorAll('.delete-icon');
+      const copyButtons = document.querySelectorAll('.copy-btn');
+      const editModal = document.getElementById('editModal');
+      const addModal = document.getElementById('addModal');
+      const closeModals = document.querySelectorAll('.close');
+      const editForm = document.querySelector('#editModal .edit-form');
+      const addForm = document.querySelector('#addModal .edit-form');
+      const addNewBtn = document.querySelector('.add-new-btn');
+
+      function filterUrlCards(category) {
+        urlCards.forEach(card => {
+          if (category === 'all' || card.dataset.category === category) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+
+      categoryButtons.forEach(button => {
+        button.addEventListener('click', function (e) {
+          if (e.target.classList.contains('delete-category')) {
+            return; // Don't filter when clicking the delete button
+          }
+          const category = this.dataset.category;
+
+          // Update active button
+          categoryButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+
+          // Filter URL cards
+          filterUrlCards(category);
+        });
+
+        // Add delete functionality
+        const deleteBtn = button.querySelector('.delete-category');
+        if (deleteBtn) {
+          deleteBtn.addEventListener('click', function (e) {
+            e.stopPropagation(); // Prevent triggering the category filter
+            const categoryName = this.parentElement.textContent.trim();
+            if (confirm(`Are you sure you want to delete the category "${categoryName}"?`)) {
+              this.parentElement.remove();
+              // You might want to handle removing associated URLs or changing their category here
+              if (this.parentElement.classList.contains('active')) {
+                document.querySelector('.category-btn[data-category="all"]').click();
+              }
+            }
+          });
+        }
+      });
+
+      addCategoryBtn.addEventListener('click', function () {
+        newCategoryInput.style.display = 'block';
+        newCategoryNameInput.focus();
+      });
+
+      submitNewCategoryBtn.addEventListener('click', function () {
+        const newCategoryName = newCategoryNameInput.value.trim();
+        if (newCategoryName) {
+          const newCategoryBtn = document.createElement('button');
+          newCategoryBtn.className = 'category-btn';
+          newCategoryBtn.dataset.category = newCategoryName.toLowerCase().replace(/\s+/g, '-');
+          newCategoryBtn.innerHTML = `${newCategoryName}<span class="delete-category">&times;</span>`;
+
+          // Add event listeners to the new button
+          newCategoryBtn.addEventListener('click', function () {
+            categoryButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            filterUrlCards(this.dataset.category);
+          });
+
+          const deleteBtn = newCategoryBtn.querySelector('.delete-category');
+          deleteBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            if (confirm(`Are you sure you want to delete the category "${newCategoryName}"?`)) {
+              newCategoryBtn.remove();
+              if (newCategoryBtn.classList.contains('active')) {
+                document.querySelector('.category-btn[data-category="all"]').click();
+              }
+            }
+          });
+
+          document.querySelector('.category-buttons').appendChild(newCategoryBtn);
+          newCategoryNameInput.value = '';
+          newCategoryInput.style.display = 'none';
+        }
+      });
+
+      // Hide new category input when clicking outside
+      document.addEventListener('click', function (e) {
+        if (!newCategoryInput.contains(e.target) && e.target !== addCategoryBtn) {
+          newCategoryInput.style.display = 'none';
+        }
+      });
+
+      // Share profile functionality
+      shareProfileBtn.addEventListener('click', function () {
+        const profileUrl = window.location.href;
+        shareUrl('Check out my UrlKeepr profile', profileUrl);
+      });
+
+      // Share URL functionality
+      shareIcons.forEach(icon => {
+        icon.addEventListener('click', function () {
+          const urlCard = this.closest('.url-card');
+          const urlTitle = urlCard.querySelector('h3').textContent;
+          const urlLink = urlCard.querySelector('a').href;
+          shareUrl(urlTitle, urlLink);
+        });
+      });
+
+      function shareUrl(title, url) {
+        if (navigator.share) {
+          navigator.share({
+            title: title,
+            url: url
+          }).then(() => {
+            console.log('Thanks for sharing!');
+          })
+            .catch(console.error);
+        } else {
+          alert(`Share this URL:\nTitle: ${title}\nLink: ${url}`);
+        }
+      }
+
+      // Copy URL functionality
+      copyButtons.forEach(button => {
+        button.addEventListener('click', function () {
+          const urlLink = this.previousElementSibling.href;
+          navigator.clipboard.writeText(urlLink).then(() => {
+            this.textContent = 'Copied!';
+            setTimeout(() => {
+              this.textContent = 'Copy';
+            }, 2000);
+          }).catch(err => {
+            console.error('Failed to copy: ', err);
+          });
+        });
+      });
+
+      // Edit URL functionality
+      editIcons.forEach(icon => {
+        icon.addEventListener('click', function () {
+          const urlCard = this.closest('.url-card');
+          const urlTitle = urlCard.querySelector('h3').textContent;
+          const urlLink = urlCard.querySelector('a').href;
+          const urlDescription = urlCard.querySelector('p').textContent;
+          const urlCategory = urlCard.dataset.category;
+
+          // Populate the edit form
+          document.getElementById('editTitle').value = urlTitle;
+          document.getElementById('editUrl').value = urlLink;
+          document.getElementById('editDescription').value = urlDescription;
+          document.getElementById('editCategory').value = urlCategory;
+
+          // Show the modal
+          editModal.style.display = 'block';
+        });
+      });
+
+      // Delete URL functionality
+      deleteIcons.forEach(icon => {
+        icon.addEventListener('click', function () {
+          const urlCard = this.closest('.url-card');
+          const urlTitle = urlCard.querySelector('h3').textContent;
+          if (confirm(`Are you sure you want to delete "${urlTitle}"?`)) {
+            urlCard.remove();
+          }
+        });
+      });
+
+      // Add New URL functionality
+      addNewBtn.addEventListener('click', function () {
+        // Clear the form
+        document.getElementById('newTitle').value = '';
+        document.getElementById('newUrl').value = '';
+        document.getElementById('newDescription').value = '';
+        document.getElementById('newCategory').value = '';
+
+        // Show the modal
+        addModal.style.display = 'block';
+      });
+
+      // Close modals when clicking on X
+      closeModals.forEach(closeBtn => {
+        closeBtn.addEventListener('click', function () {
+          this.closest('.modal').style.display = 'none';
+        });
+      });
+
+      // Close modals when clicking outside of them
+      window.addEventListener('click', function (event) {
+        if (event.target.classList.contains('modal')) {
+          event.target.style.display = 'none';
+        }
+      });
+
+      // Handle edit form submission
+      editForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        // Here you would typically send the data to your backend
+        // For this example, we'll just update the card directly
+        const activeCard = document.querySelector('.url-card .edit-icon:hover')?.closest('.url-card');
+        if (activeCard) {
+          activeCard.querySelector('h3').textContent = document.getElementById('editTitle').value;
+          activeCard.querySelector('a').href = document.getElementById('editUrl').value;
+          activeCard.querySelector('a').textContent = new URL(document.getElementById('editUrl').value).hostname;
+          activeCard.querySelector('p').textContent = document.getElementById('editDescription').value;
+          activeCard.dataset.category = document.getElementById('editCategory').value;
+        }
+        editModal.style.display = 'none';
+      });
+
+      // Handle add form submission
+      addForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        // Here you would typically send the data to your backend
+        // For this example, we'll just add a new card to the list
+        const newCard = document.createElement('div');
+        newCard.className = 'url-card';
+        newCard.dataset.category = document.getElementById('newCategory').value;
+        const newUrl = document.getElementById('newUrl').value;
+        newCard.innerHTML = `
+        <h3>${document.getElementById('newTitle').value}</h3>
+        <div class="url-link">
+          <a href="${newUrl}">${new URL(newUrl).hostname}</a>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <p>${document.getElementById('newDescription').value}</p>
+        <div class="url-card-buttons">
+          <button class="share-icon" title="Share this URL">&#128279;</button>
+          <button class="edit-icon" title="Edit this URL">&#9998;</button>
+          <button class="delete-icon" title="Delete this URL">&#128465;</button>
+        </div>
+      `;
+        document.querySelector('.url-cards').appendChild(newCard);
+
+        // Add event listeners to the new card
+        newCard.querySelector('.copy-btn').addEventListener('click', copyUrlHandler);
+        newCard.querySelector('.share-icon').addEventListener('click', shareUrlHandler);
+        newCard.querySelector('.edit-icon').addEventListener('click', editUrlHandler);
+        newCard.querySelector('.delete-icon').addEventListener('click', deleteUrlHandler);
+
+        addModal.style.display = 'none';
+      });
+
+      // Handlers for new cards
+      function copyUrlHandler() {
+        const urlLink = this.previousElementSibling.href;
+        navigator.clipboard.writeText(urlLink).then(() => {
+          this.textContent = 'Copied!';
+          setTimeout(() => {
+            this.textContent = 'Copy';
+          }, 2000);
+        }).catch(err => {
+          console.error('Failed to copy: ', err);
+        });
+      }
+
+      function shareUrlHandler() {
+        const urlCard = this.closest('.url-card');
+        const urlTitle = urlCard.querySelector('h3').textContent;
+        const urlLink = urlCard.querySelector('a').href;
+        shareUrl(urlTitle, urlLink);
+      }
+
+      function editUrlHandler() {
+        const urlCard = this.closest('.url-card');
+        const urlTitle = urlCard.querySelector('h3').textContent;
+        const urlLink = urlCard.querySelector('a').href;
+        const urlDescription = urlCard.querySelector('p').textContent;
+        const urlCategory = urlCard.dataset.category;
+
+        // Populate the edit form
+        document.getElementById('editTitle').value = urlTitle;
+        document.getElementById('editUrl').value = urlLink;
+        document.getElementById('editDescription').value = urlDescription;
+        document.getElementById('editCategory').value = urlCategory;
+
+        // Show the modal
+        editModal.style.display = 'block';
+      }
+
+      function deleteUrlHandler() {
+        const urlCard = this.closest('.url-card');
+        const urlTitle = urlCard.querySelector('h3').textContent;
+        if (confirm(`Are you sure you want to delete "${urlTitle}"?`)) {
+          urlCard.remove();
+        }
+      }
+    });
+  </script> -->
+</body>
+
+</html>

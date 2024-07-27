@@ -1,5 +1,5 @@
 from urljar import app
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, session
 from urljar.forms import SignupForm, LoginForm
 from urljar.db import userlogin, signup, userexist
 #handle signup page 
@@ -38,9 +38,10 @@ def login():
             logindata = userlogin(request.form["username"], request.form["password"])
             
             if logindata['case']:
-                return redirect(url_for('user'))
+                session["username"] = request.form["username"]
+                return redirect(url_for('user', username= request.form["username"]))
             else:
-                flash(logindata['massage'], 'success')
+                flash(logindata['massage'])
                 
         else:
             for field, errors in form.errors.items():
@@ -53,9 +54,13 @@ def login():
 def edit():
     return render_template("editp.html")
 
-@app.route("/user")
-def user():
-    return render_template("user.html")
+@app.route("/<username>")
+def user(username):
+    sessionuname = session["username"]
+    if username == sessionuname:
+        return render_template("dashboard.html", username = sessionuname)
+    else:
+        return render_template("profile.html", username=username )
 
 #api routes
 @app.route("/username")

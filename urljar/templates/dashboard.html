@@ -3,7 +3,6 @@
 
 <head>
   <meta charset="UTF-8">
-
   <!-- <base href="https://urlkeepr.net/dashboard"> -->
   <title>UrlKeepr - Your Dashboard (Dark Mode)</title>
   <meta name="description" content="Home page of link jar">
@@ -19,7 +18,7 @@
         <img class="profile-image" src="profile.jpg" alt="User profile picture, smiling person with short dark hair"
           width="60" height="60">
         <div class="profile-info">
-          <h1>Welcome back, Sarah!</h1>
+          <h1>Welcome back, {{username}}</h1>
           <p>Web developer and avid bookmarker </p>
           <a href="#">httpa://mastiflicks.site &#128279;</a>
         </div>
@@ -39,7 +38,11 @@
       </div>
       <div class="category-buttons">
         <button class="category-btn active" data-category="all">All</button>
-        <button class="category-btn" data-category="work">Work<span class="delete-category">&times;</span></button>
+        <button class="category-btn" data-category="work">
+          Work
+          <span class="delete-category">&times;</span>
+          <span class="edit-category">&#9998;</span>
+        </button>
         <button class="category-btn" data-category="entertainment">Entertainment<span
             class="delete-category">&times;</span></button>
         <button class="category-btn" data-category="education">Education<span

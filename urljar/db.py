@@ -11,6 +11,7 @@ client = MongoClient(url)
 db = client.urljar
 collection = db.users
 
+#check if user exists or not while log in
 def userlogin(uname, password):
     
     finduser = list(collection.find({"username": uname}))
@@ -21,10 +22,13 @@ def userlogin(uname, password):
             return {"massage":"You are logged in", "case":True}
         else:
             return {"massage":"Password do not match", "case":False}
-
+        
+# insert data to db when new user signpu
 def signup():
     collection.insert_one()
 
+
+#check if username is unique  or not while signup
 def userexist(uname):
     user = list(collection.find({"username": uname}))
     if user == []:
