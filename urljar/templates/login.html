@@ -64,7 +64,10 @@
   
   <script>
     function removeAlert(){
-      let alertdiv = document.getElementById("alertdiv").remove()
+      let alertdiv = document.getElementById("alertdiv")
+      if (alertdiv !== null){
+        alertdiv.remove()
+      }
     }
     setTimeout(removeAlert, 5000);
    

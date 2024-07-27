@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <!-- <base href="https://urlkeepr.net/sign-up"> -->
-  <title>Urljar - Sign Up</title>
+  <title>UrlJar - Sign Up</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="keywords" content="signup for urljar">
   <meta name="description" content="Signup for urljar the one hub to save all your urls.">
@@ -14,25 +14,25 @@
 <body>
   <div class="container">
     <div class="logo">
-      <img src="urlkeepr-logo.png" alt="UrlKeepr logo" width="150" height="50">
+      <img src="urlkJar-logo.png" alt="UrlKeepr logo" width="150" height="50">
     </div>
 
-    <h1>Sign Up for UrlKeepr</h1>
+    <h1>Sign Up for UrlJar</h1>
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     <div class="" id="alertdiv">
-        {% for category, message in messages %}
-        <div class="alert"><span>{{ message }}</span></div>
-        {% endfor %}
+      {% for category, message in messages %}
+      <div class="alert"><span>{{ message }}</span></div>
+      {% endfor %}
     </div>
     {% endif %}
     {% endwith %}
 
-    <form class="signup-form login-form" action="/signup" method="POST">
+    <form id="form" class="signup-form login-form" action="/signup" method="POST">
       <div class="form-group">
         <label for="username">Username*</label>
-        <input type="text" id="username" name="username" placeholder="Username" required>
-
+        <input type="text" id="username" name="username" oninput="usernamecheck(event)" placeholder="Username" required>
+        <span id="namealert"></span>
 
       </div>
 
@@ -55,7 +55,7 @@
         <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
       </div>
 
-      <button type="submit">Create Account</button>
+      <button type="submit" onclick="clear()">Create Account</button>
     </form>
 
     <!-- <div class="social-signup">
@@ -75,11 +75,37 @@
     </div>
   </div>
   <script>
-    function removeAlert(){
-      let alertdiv = document.getElementById("alertdiv").remove()
+    function removeAlert() {
+
+      let alertdiv = document.getElementById("alertdiv")
+
+      if (alertdiv !== null) {
+        alertdiv.remove()
+      }
     }
     setTimeout(removeAlert, 5000);
-   
+
+    function usernamecheck(event) {
+      let username = document.getElementById("username")
+      let uname = username.value
+      if (uname.length >= 3) {
+        async function check() {
+          let req = await fetch(`/username?name=${uname}`)
+          let res = await req.json()
+          let useralert = document.getElementById("namealert")
+          if (res.case == true) {
+            useralert.innerText = res.massage
+            useralert.style.color = "green"
+
+          } else {
+            useralert.innerText = res.massage
+            useralert.style.color = "red"
+          }
+        }
+        check()
+      }
+    }
+
   </script>
   <!-- <script>
     document.addEventListener('DOMContentLoaded', function () {

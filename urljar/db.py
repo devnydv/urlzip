@@ -1,7 +1,7 @@
 import json
 from pymongo.mongo_client import MongoClient
 import os
-
+import bcrypt
 #database config
 api = "mongodb+srv://bittumail:12356789@cluster0.fqrswkj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 #api = os.getenv('mongo")
@@ -18,15 +18,15 @@ def userlogin(uname, password):
     if finduser == []:
         return {"massage":"User name not fount", "case":False}
     else: 
-        if password == finduser[0]['password']:
+        if bcrypt.checkpw(password.encode("utf-16"), finduser[0]['password']):
             return {"massage":"You are logged in", "case":True}
         else:
             return {"massage":"Password do not match", "case":False}
         
 # insert data to db when new user signpu
-def signup():
-    collection.insert_one()
-
+def saveuser(userdata):
+    #print(userdata)
+    collection.insert_one(userdata)
 
 #check if username is unique  or not while signup
 def userexist(uname):
