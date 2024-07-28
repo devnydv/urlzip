@@ -19,13 +19,13 @@
           width="60" height="60">
         <div class="profile-info">
           <h1>Welcome back, {{username}}</h1>
-          <p>Web developer and avid bookmarker </p>
-          <a href="#">httpa://mastiflicks.site &#128279;</a>
+          <p>{{userdata[0]["bio"]}} </p>
+          <!-- <a href="#">httpa://mastiflicks.site &#128279;</a> -->
         </div>
       </div>
       <div class="header-buttons">
         <a class="edit-btn" href="/edit"> Edit</a>
-        <a class="logout-btn" href="/login">Logout</a>
+        <a class="logout-btn" id="logout" href="/logout">Logout</a>
         <button class="share-btn">Share&#128279;</button>
         <a href="#"></a>
       </div>
@@ -43,12 +43,15 @@
           <span class="delete-category">&times;</span>
           <span class="edit-category">&#9998;</span>
         </button>
-        <button class="category-btn" data-category="entertainment">Entertainment<span
-            class="delete-category">&times;</span></button>
-        <button class="category-btn" data-category="education">Education<span
-            class="delete-category">&times;</span></button>
-        <button class="category-btn" data-category="personal">Personal<span
-            class="delete-category">&times;</span></button>
+        {%for category in userdata[0]["category"]%}
+        <button class="category-btn" data-category="{{category |title}}">
+          {{category |title}}
+          <span class="delete-category">&times;</span>
+          <span class="edit-category">&#9998;</span>
+        </button>
+        
+        {%endfor%}
+        
       </div>
       <div class="new-category-input">
         <input type="text" id="newCategoryName" placeholder="Enter new category name">
@@ -57,19 +60,7 @@
     </section>
 
     <main class="url-cards">
-      <div class="url-card" data-category="work">
-        <h3>StackOverflow</h3>
-        <div class="url-link">
-          <a href="https://stackoverflow.com">stackoverflow.com</a>
-          <button class="copy-btn">Copy</button>
-        </div>
-        <p>Developer Q&A forum</p>
-        <div class="url-card-buttons">
-          <button class="share-icon" title="Share this URL">&#128279;</button>
-          <button class="edit-icon" title="Edit this URL">&#9998;</button>
-          <button class="delete-icon" title="Delete this URL">&#128465;</button>
-        </div>
-      </div>
+      
       <div class="url-card" data-category="work">
         <h3>GitHub</h3>
         <div class="url-link">
@@ -83,71 +74,22 @@
           <button class="delete-icon" title="Delete this URL">&#128465;</button>
         </div>
       </div>
-      <div class="url-card" data-category="entertainment">
-        <h3>Netflix</h3>
+      {%for link in userdata[0]["links"]%}
+      <div class="url-card" data-category="{{link.cat|title}}">
+        <h3>{{link.title}}</h3>
         <div class="url-link">
-          <a href="https://netflix.com">netflix.com</a>
+          <a href="{{link.url}}" target="_blank">{{link.url}}</a>
           <button class="copy-btn">Copy</button>
         </div>
-        <p>Streaming service for movies and TV shows</p>
+        <p>{{link.desc}}</p>
         <div class="url-card-buttons">
           <button class="share-icon" title="Share this URL">&#128279;</button>
           <button class="edit-icon" title="Edit this URL">&#9998;</button>
           <button class="delete-icon" title="Delete this URL">&#128465;</button>
         </div>
       </div>
-      <div class="url-card" data-category="entertainment">
-        <h3>Spotify</h3>
-        <div class="url-link">
-          <a href="https://spotify.com">spotify.com</a>
-          <button class="copy-btn">Copy</button>
-        </div>
-        <p>Music streaming platform</p>
-        <div class="url-card-buttons">
-          <button class="share-icon" title="Share this URL">&#128279;</button>
-          <button class="edit-icon" title="Edit this URL">&#9998;</button>
-          <button class="delete-icon" title="Delete this URL">&#128465;</button>
-        </div>
-      </div>
-      <div class="url-card" data-category="education">
-        <h3>Coursera</h3>
-        <div class="url-link">
-          <a href="https://coursera.org">coursera.org</a>
-          <button class="copy-btn">Copy</button>
-        </div>
-        <p>Online learning platform</p>
-        <div class="url-card-buttons">
-          <button class="share-icon" title="Share this URL">&#128279;</button>
-          <button class="edit-icon" title="Edit this URL">&#9998;</button>
-          <button class="delete-icon" title="Delete this URL">&#128465;</button>
-        </div>
-      </div>
-      <div class="url-card" data-category="personal">
-        <h3>Pinterest</h3>
-        <div class="url-link">
-          <a href="https://pinterest.com">pinterest.com</a>
-          <button class="copy-btn">Copy</button>
-        </div>
-        <p>Visual discovery engine for finding ideas</p>
-        <div class="url-card-buttons">
-          <button class="share-icon" title="Share this URL">&#128279;</button>
-          <button class="edit-icon" title="Edit this URL">&#9998;</button>
-          <button class="delete-icon" title="Delete this URL">&#128465;</button>
-        </div>
-      </div>
-      <div class="url-card" data-category="entertainment">
-        <h3>New Site</h3>
-        <div class="url-link">
-          <a href="https://www.imdb.com/title/tt30970235/">www.imdb.com/title/tt30970235/</a>
-          <button class="copy-btn">Copy</button>
-        </div>
-        <p>This is IMDb</p>
-        <div class="url-card-buttons">
-          <button class="share-icon" title="Share this URL">&#128279;</button>
-          <button class="edit-icon" title="Edit this URL">&#9998;</button>
-          <button class="delete-icon" title="Delete this URL">&#128465;</button>
-        </div>
-      </div>
+      
+      {%endfor%}
     </main>
 
     <div class="add-new-btn-container">
@@ -156,7 +98,7 @@
   </div>
 
 
-    
+
 
   <footer>
     <p>UrlKeepr - Your Personal URL Library | <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms of

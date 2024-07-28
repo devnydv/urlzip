@@ -20,13 +20,20 @@
           width="60" height="60">
         <div class="profile-info">
           <h1> {{username}}</h1>
-          <p>Web developer and avid bookmarker </p>
+          <p>web developer</p>
           <a href="#">httpa://mastiflicks.site &#128279;</a>
         </div>
       </div>
       <div class="header-buttons">
         <!-- <a class="edit-btn" href="/edit"> Edit</a> -->
-        <a class="logout-btn" href="/login">Logout</a>
+         
+         {%if logged%}
+         <a class="edit-btn" href="/user/{{username}}">{{username}}</a>
+         <a class="logout-btn" href="/logout">Logout</a>
+         {%else%}
+         <a class="logout-btn" href="/login">Login</a>
+         {%endif%}
+        
         <button class="share-btn">Share&#128279;</button>
         <a href="#"></a>
       </div>

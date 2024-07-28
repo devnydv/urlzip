@@ -2,7 +2,7 @@ from urljar import app
 import bcrypt
 from flask import render_template, flash, redirect, url_for, request, session
 from urljar.forms import SignupForm, LoginForm
-from urljar.db import userlogin, saveuser, userexist
+from urljar.db import userlogin, saveuser, userexist, usersdata
 #handle signup page 
 
 @app.route("/")
@@ -16,7 +16,7 @@ def signup():
         form = SignupForm(request.form)
         if form.validate():
             # Handle form submission, e.g., save user data
-            username = request.form['username']
+            username = request.form['username'].lower()
             userval = userexist(username)
             if userval["case"]:
                 bio = request.form["bio"]
@@ -24,18 +24,25 @@ def signup():
                 encodepass = bcrypt.hashpw(password.encode("utf-16"), bcrypt.gensalt())
                 if bio =="":
                     bio = "Not available"
-                formval = {"username":request.form['username'],
+                formval = {"username": username,
                             "email": request.form['email'],
                             "bio": bio,
                             "password": encodepass,
                             "category":["seggestion"],
-                            "links":{
-                                "0":{
+                            "links":[
+                                {
                                     "title":"Link of your profile",
                                     "desc": "This is your profile link that you can share",
-                                    "url": f'https://urljar.vercel.app/user/{username}'
+                                    "url": f'https://urljar.vercel.app/user/{username}',
+                                    "cat":"seggestion"
+                                },
+                                {
+                                    "title":"Second link for test",
+                                    "desc": "This is your profile link that you can share",
+                                    "url": f'https://urljar.vercel.app/user/{username}',
+                                    "cat":"seggestion"
                                 }
-                            }
+                            ]
                             }
                 sendt = saveuser(formval)
                 return redirect(url_for('login'))
@@ -81,15 +88,42 @@ def edit():
 
 @app.route("/user/<username>")
 def user(username):
-    sessionuname = session["username"]
-    if username == sessionuname:
-        return render_template("dashboard.html", username = sessionuname)
+    userval = userexist(username)
+    if not userval["case"]:
+        #print("username" in session)
+        useralldata = usersdata(username)
+        #print(useralldata)
+        #useralldata = "lol"
+        if "username" in session:
+
+            sessionuname = session["username"]
+            if sessionuname == username:
+                return render_template("dashboard.html", username = sessionuname, userdata = useralldata) 
+            else:  
+                return render_template("profile.html", username=sessionuname, userdata = useralldata, logged= True)
+        else:
+            return render_template("profile.html", username=username, userdata = useralldata, logged= False)
     else:
-        return render_template("profile.html", username=username )
+        return render_template("nouser.html")
+    
 
 #api routes
+# check if user already present or not 
 @app.route("/username")
 def user_exist():
-    input = request.args.get("name")
+    input = request.args.get("name").lower()
     userval = userexist(input)
     return userval
+
+#logout user
+@app.route("/logout")
+def logout():
+    if "username" in session:
+        uname = session["username"]
+        session.clear()
+        return redirect(url_for('user', username= uname))
+        #return "lol"
+    else:
+        #return redirect(url_for("login"))
+        return redirect(url_for('user', username= uname))
+        #return"lol"

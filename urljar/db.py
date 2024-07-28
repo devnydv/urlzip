@@ -35,3 +35,8 @@ def userexist(uname):
         return {"massage":"username is Unique", "case":True}
     else: 
         return {"massage":"username is already taken", "case":False}
+    
+
+# code for the user page
+def usersdata(username):
+    return list(collection.find({"username": username}))
