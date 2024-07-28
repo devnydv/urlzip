@@ -88,6 +88,7 @@ def edit():
 
 @app.route("/user/<username>")
 def user(username):
+<<<<<<< HEAD
     userval = userexist(username)
     if not userval["case"]:
         #print("username" in session)
@@ -106,6 +107,13 @@ def user(username):
     else:
         return render_template("nouser.html")
     
+=======
+    sessionuname = session["username"]
+    if username == sessionuname:
+        return render_template("dashboard.html", username = sessionuname)
+    #check whether the user exists in the db kr not and then.
+    return render_template("profile.html", username=username )
+>>>>>>> 44b0eec6bcfee21b7f871f383841a4623f664f6b
 
 #api routes
 # check if user already present or not 
@@ -114,6 +122,7 @@ def user_exist():
     input = request.args.get("name").lower()
     userval = userexist(input)
     return userval
+<<<<<<< HEAD
 
 #logout user
 @app.route("/logout")
@@ -127,3 +136,5 @@ def logout():
         #return redirect(url_for("login"))
         return redirect(url_for('user', username= uname))
         #return"lol"
+=======
+>>>>>>> 44b0eec6bcfee21b7f871f383841a4623f664f6b
