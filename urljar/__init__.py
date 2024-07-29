@@ -4,4 +4,5 @@ app = Flask(__name__)
 app.secret_key ="doNotTryToSuck"
 
 from urljar import routes
+from urljar import htmx
 

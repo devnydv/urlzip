@@ -1,152 +1,222 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html"%}
 
-<head>
-  <meta charset="UTF-8">
-  <!-- <base href="https://urlkeepr.net/dashboard"> -->
-  <title>UrlKeepr - Your Dashboard (Dark Mode)</title>
-  <meta name="description" content="Home page of link jar">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{{url_for('static', filename='css/user.css')}}">
 
-</head>
+{%block head %}
+<script src="https://unpkg.com/htmx.org@2.0.1"
+  integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/" crossorigin="anonymous"></script>
+<!-- <base href="https://urlkeepr.net/dashboard"> -->
+<title>UrlKeepr - Your Dashboard (Dark Mode)</title>
+<meta name="description" content="Home page of link jar">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{{url_for('static', filename='css/user.css')}}">
 
-<body>
-  <div class="container">
-    <header class="header">
-      <div class="profile">
-        <img class="profile-image" src="profile.jpg" alt="User profile picture, smiling person with short dark hair"
-          width="60" height="60">
-        <div class="profile-info">
-          <h1>Welcome back, {{username}}</h1>
-          <p>{{userdata[0]["bio"]}} </p>
-          <!-- <a href="#">httpa://mastiflicks.site &#128279;</a> -->
-        </div>
+{% endblock %}
+
+{%block content%}
+<div class="container">
+  <header class="header">
+    <div class="profile">
+      <img class="profile-image" src="profile.jpg" alt="User profile picture, smiling person with short dark hair"
+        width="60" height="60">
+      <div class="profile-info">
+        <h1>Welcome back, {{username}}</h1>
+        <p>{{userdata[0]["bio"]}} </p>
+        <!-- <a href="#">httpa://mastiflicks.site &#128279;</a> -->
       </div>
-      <div class="header-buttons">
-        <a class="edit-btn" href="/edit"> Edit</a>
-        <a class="logout-btn" id="logout" href="/logout">Logout</a>
-        <button class="share-btn">Share&#128279;</button>
-        <a href="#"></a>
-      </div>
-    </header>
+    </div>
+    <div class="header-buttons">
+      <a class="edit-btn" href="/edit"> Edit</a>
+      <a class="logout-btn" id="logout" href="/logout">Logout</a>
+      <button class="share-btn">Share&#128279;</button>
+      <a href="#"></a>
+    </div>
+  </header>
 
-    <section class="category-section">
-      <div class="category-header">
-        <h2>Categories</h2>
-        <button class="add-category-btn">Add Category</button>
-      </div>
-      <div class="category-buttons">
-        <button class="category-btn active" data-category="all">All</button>
-        <button class="category-btn" data-category="work">
+  <section class="category-section">
+    <div class="category-header">
+      <h2>Categories</h2>
+      <!--    <button class="add-category-btn" hx-get="/addcatdiv" hx-target=".category-buttons" hx-swap="beforeend">Add
+        Category</button>  -->
+    </div>
+    <div class="category-buttons">
+      <!-- category buttons -->
+      <button class="category-btn active" data-category="all" onclick="filter()">All</button>
+      <div>
+        <button class="category-btn" data-category="work" onclick="filter()">
           Work
-          <span class="delete-category">&times;</span>
-          <span class="edit-category">&#9998;</span>
+          <span class="delete-category" hx-delete="/catdelete" hx-target="closest div"
+            hx-swap="outerHTMl">&times;</span>
+          <!-- <span class="edit-category">&#9998;</span> -->
         </button>
-        {%for category in userdata[0]["category"]%}
-        <button class="category-btn" data-category="{{category |title}}">
+
+
+
+
+
+      </div>
+      {% set categories = userdata[0]["category"]%}
+      {%for category in categories%}
+      <div>
+        <button class="category-btn" data-category="{{category |title}}" id="{{loop.index0}}" onclick="filter()">
           {{category |title}}
-          <span class="delete-category">&times;</span>
-          <span class="edit-category">&#9998;</span>
+          <span class="delete-category" hx-delete="/catdelete?cat={{category}}" hx-swap="outerHTMl"
+            hx-target="closest div">&times;</span>
+          <!-- <span class="edit-category">&#9998;</span> -->
         </button>
-        
-        {%endfor%}
-        
       </div>
-      <div class="new-category-input">
-        <input type="text" id="newCategoryName" placeholder="Enter new category name">
-        <button id="submitNewCategory">Add</button>
-      </div>
-    </section>
-
-    <main class="url-cards">
-      
-      <div class="url-card" data-category="work">
-        <h3>GitHub</h3>
-        <div class="url-link">
-          <a href="https://github.com">github.com</a>
-          <button class="copy-btn">Copy</button>
-        </div>
-        <p>Code repository and version control</p>
-        <div class="url-card-buttons">
-          <button class="share-icon" title="Share this URL">&#128279;</button>
-          <button class="edit-icon" title="Edit this URL">&#9998;</button>
-          <button class="delete-icon" title="Delete this URL">&#128465;</button>
-        </div>
-      </div>
-      {%for link in userdata[0]["links"]%}
-      <div class="url-card" data-category="{{link.cat|title}}">
-        <h3>{{link.title}}</h3>
-        <div class="url-link">
-          <a href="{{link.url}}" target="_blank">{{link.url}}</a>
-          <button class="copy-btn">Copy</button>
-        </div>
-        <p>{{link.desc}}</p>
-        <div class="url-card-buttons">
-          <button class="share-icon" title="Share this URL">&#128279;</button>
-          <button class="edit-icon" title="Edit this URL">&#9998;</button>
-          <button class="delete-icon" title="Delete this URL">&#128465;</button>
-        </div>
-      </div>
-      
       {%endfor%}
-    </main>
-
-    <div class="add-new-btn-container">
-      <button class="add-new-btn">Add New URL</button>
+      <div>
+        <button class="add-category-btn" hx-get="/addcatdiv" hx-target="closest div" hx-swap="outerHTML">Add
+          Category</button>
+      </div>
     </div>
-  </div>
-
-
-
-
-  <footer>
-    <p>UrlKeepr - Your Personal URL Library | <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms of
-        Service</a></p>
-  </footer>
-
-  <div id="editModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <form class="edit-form">
-        <h2>Edit URL</h2>
-        <input type="text" id="editTitle" placeholder="Title" required>
-        <input type="url" id="editUrl" placeholder="URL" required>
-        <textarea id="editDescription" placeholder="Short description" rows="3"></textarea>
-        <select id="editCategory" required>
-          <option value="">Select Category</option>
-          <option value="work">Work</option>
-          <option value="entertainment">Entertainment</option>
-          <option value="education">Education</option>
-          <option value="personal">Personal</option>
-        </select>
-        <button type="submit">Save Changes</button>
-      </form>
+    <div class="new-category-input">
+      <!-- <input type="text" id="newCategoryName" placeholder="Enter new category name"> -->
+      <!-- <button id="submitNewCategory">Add</button> -->
     </div>
-  </div>
+  </section>
 
-  <div id="addModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <form class="edit-form">
-        <h2>Add New URL</h2>
-        <input type="text" id="newTitle" placeholder="Title" required>
-        <input type="url" id="newUrl" placeholder="URL" required>
-        <textarea id="newDescription" placeholder="Short description" rows="3"></textarea>
-        <select id="newCategory" required>
-          <option value="">Select Category</option>
-          <option value="work">Work</option>
-          <option value="entertainment">Entertainment</option>
-          <option value="education">Education</option>
-          <option value="personal">Personal</option>
-        </select>
-        <button type="submit">Add URL</button>
-      </form>
+  <!-- url cards -->
+  <main class="url-cards">
+
+    <div class="url-card" data-category="work">
+      <h3>GitHub</h3>
+      <div class="url-link">
+        <a href="https://github.com">github.com</a>
+        <button class="copy-btn">Copy</button>
+      </div>
+      <p>Code repository and version control</p>
+      <div class="url-card-buttons">
+        <button class="share-icon" title="Share this URL">&#128279;</button>
+        <button class="edit-icon" title="Edit this URL">&#9998;</button>
+        <button class="delete-icon" title="Delete this URL">&#128465;</button>
+      </div>
     </div>
+    {%for link in userdata[0]["links"]%}
+    <div class="url-card" data-category="{{link.cat|title}}">
+      <!-- <form action="">
+        <div class="new-card-input">
+          <input type="text" id="newCategoryName" placeholder="Title for the URL">
+          <input type="text" id="newCategoryName" placeholder="Title for the URL">
+          <input type="text" id="newCategoryName" placeholder="Title for the URL">
+          
+          
+        </div>
+        <button class="copy-btn"> Confirm Edit</button>
+        <button class="copy-btn"> Cancel</button>
+      </form> -->
+
+      <h3>{{link.title}}</h3>
+      <div class="url-link">
+        <a href="{{link.url}}" target="_blank">{{link.url}}</a>
+        <button class="copy-btn">Copy</button>
+      </div>
+      <p>{{link.desc}}</p>
+      <div class="url-card-buttons">
+        <button class="share-icon" title="Share this URL">&#128279;</button>
+        <button class="edit-icon" title="Edit this URL">&#9998;</button>
+        <button class="delete-icon" title="Delete this URL">&#128465;</button>
+      </div>
+    </div>
+
+    {%endfor%}
+  </main>
+
+  <div class="add-new-btn-container">
+    <button class="add-new-btn">Add New URL</button>
   </div>
+</div>
 
 
-  <script>
+<footer>
+  <p>UrlKeepr - Your Personal URL Library | <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms of
+      Service</a></p>
+</footer>
+
+<div id="editModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <form class="edit-form">
+      <h2>Edit URL</h2>
+      <input type="text" id="editTitle" placeholder="Title" required>
+      <input type="url" id="editUrl" placeholder="URL" required>
+      <textarea id="editDescription" placeholder="Short description" rows="3"></textarea>
+      <select id="editCategory" required>
+        <option value="">Select Category</option>
+        <option value="work">Work</option>
+        <option value="entertainment">Entertainment</option>
+        <option value="education">Education</option>
+        <option value="personal">Personal</option>
+      </select>
+      <button type="submit">Save Changes</button>
+    </form>
+  </div>
+</div>
+
+<div id="addModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <form class="edit-form">
+      <h2>Add New URL</h2>
+      <input type="text" id="newTitle" placeholder="Title" required>
+      <input type="url" id="newUrl" placeholder="URL" required>
+      <textarea id="newDescription" placeholder="Short description" rows="3"></textarea>
+      <select id="newCategory" required>
+        <option value="">Select Category</option>
+        <option value="work">Work</option>
+        <option value="entertainment">Entertainment</option>
+        <option value="education">Education</option>
+        <option value="personal">Personal</option>
+      </select>
+      <button type="submit">Add URL</button>
+    </form>
+  </div>
+</div>
+
+
+
+<script>
+
+  function filter() {
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    const urlCards = document.querySelectorAll('.url-card');
+
+    function filterUrlCards(category) {
+      urlCards.forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    categoryButtons.forEach(button => {
+      button.addEventListener('click', function (e) {
+        if (e.target.classList.contains('delete-category')) {
+          return; // Don't filter when clicking the delete button
+        }
+        const category = this.dataset.category;
+
+        // Update active button
+        categoryButtons.forEach(btn => btn.classList.remove('active'));
+        this.classList.add('active');
+
+        // Filter URL cards
+        filterUrlCards(category);
+      });
+    })
+  }
+  filter()
+</script>
+
+
+
+
+
+
+
+<!-- <script>
     document.addEventListener('DOMContentLoaded', function () {
       const categoryButtons = document.querySelectorAll('.category-btn');
       const urlCards = document.querySelectorAll('.url-card');
@@ -448,7 +518,5 @@
         }
       }
     });
-  </script>
-</body>
-
-</html>
+  </script> -->
+{%endblock%}

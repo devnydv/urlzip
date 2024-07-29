@@ -127,3 +127,7 @@ def logout():
         #return redirect(url_for("login"))
         return redirect(url_for('user', username= uname))
         #return"lol"
+
+
+
+    

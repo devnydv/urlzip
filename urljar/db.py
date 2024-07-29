@@ -40,3 +40,18 @@ def userexist(uname):
 # code for the user page
 def usersdata(username):
     return list(collection.find({"username": username}))
+
+# code to insert new category in db
+
+def addcat(uname, cataval):
+    user = list(collection.find({"username": uname}))
+    filter = {"username": uname}
+    update = {"$push": {"category": cataval}}
+    result = collection.update_one(filter, update)
+
+#code to detele the category on x btn click
+def delcat(uname, cataval):
+    user = list(collection.find({"username": uname}))
+    filter = {"username": uname}
+    update = {"$pull": {"category": cataval}}
+    result = collection.update_one(filter, update)

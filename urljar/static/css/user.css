@@ -201,10 +201,10 @@ body {
   display: block;
 }
 
-.new-category-input {
+/* .new-category-input {
   display: none;
   margin-top: 0.5rem;
-}
+} */
 
 .new-category-input input {
   padding: 0.4rem;
@@ -242,7 +242,23 @@ body {
   transition: transform 0.3s ease;
   position: relative;
 }
-
+.new-card-input{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  
+}
+.new-card-input input {
+  padding: 0.4rem;
+  border: 1px solid var(--primary-color);
+  border-radius: 5px;
+  background-color: var(--input-bg-color);
+  color: var(--text-color);
+  margin-top: 1rem;
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
+  
+}
 .url-card:hover {
   transform: translateY(-3px);
 }
