@@ -16,10 +16,10 @@
 <div class="container">
   <header class="header">
     <div class="profile">
-      <img class="profile-image" src="profile.jpg" alt="User profile picture, smiling person with short dark hair"
+      <img class="profile-image" src="{{url_for('static', filename='asset/profile.png')}}" alt="User profile picture, smiling person with short dark hair"
         width="60" height="60">
       <div class="profile-info">
-        <h1>Welcome back, {{username}}</h1>
+        <h1>Welcome back, {{username| title}}</h1>
         <p>{{userdata[0]["bio"]}} </p>
         <!-- <a href="#">httpa://mastiflicks.site &#128279;</a> -->
       </div>
@@ -41,19 +41,7 @@
     <div class="category-buttons">
       <!-- category buttons -->
       <button class="category-btn active" data-category="all" onclick="filter()">All</button>
-      <div>
-        <button class="category-btn" data-category="work" onclick="filter()">
-          Work
-          <span class="delete-category" hx-delete="/catdelete" hx-target="closest div"
-            hx-swap="outerHTMl">&times;</span>
-          <!-- <span class="edit-category">&#9998;</span> -->
-        </button>
-
-
-
-
-
-      </div>
+      
       {% set categories = userdata[0]["category"]%}
       {%for category in categories%}
       <div>
@@ -79,21 +67,6 @@
   <!-- url cards -->
   <main class="url-cards">
 
-    <div class="url-card" data-category="work">
-      <h3>GitHub</h3>
-      <div class="url-link">
-        <a href="https://github.com">github.com</a>
-        <button class="copy-btn">Copy</button>
-      </div>
-      <p>Code repository and version control</p>
-      <div class="url-card-buttons">
-        <button class="share-icon" title="Share this URL">&#128279;</button>
-        <button class="edit-icon" title="Edit this URL">&#9998;</button>
-        <button class="delete-icon" title="Delete this URL">&#128465;</button>
-      </div>
-    </div>
-
-    
     {%for link in userdata[0]["links"]%}
     <div class="url-card" data-category="{{link.cat|title}}">
       <h3>{{link.title}}</h3>
@@ -125,7 +98,7 @@
       Service</a></p>
 </footer>
 
-<div id="editModal" class="modal">
+<!-- <div id="editModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
     <form class="edit-form">
@@ -143,9 +116,9 @@
       <button type="submit">Save Changes</button>
     </form>
   </div>
-</div>
+</div> -->
 
-<div id="addModal" class="modal">
+<!-- <div id="addModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
     <form class="edit-form">
@@ -163,7 +136,7 @@
       <button type="submit">Add URL</button>
     </form>
   </div>
-</div>
+</div> -->
 
 
 

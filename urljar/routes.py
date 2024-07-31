@@ -100,9 +100,9 @@ def user(username):
             if sessionuname == username:
                 return render_template("dashboard.html", username = sessionuname, userdata = useralldata) 
             else:  
-                return render_template("profile.html", username=sessionuname, userdata = useralldata, logged= True)
+                return render_template("profile.html",pname=username, username=sessionuname, userdata = useralldata, logged= True)
         else:
-            return render_template("profile.html", username=username, userdata = useralldata, logged= False)
+            return render_template("profile.html", pname=username, username=username, userdata = useralldata, logged= False)
     else:
         return render_template("nouser.html")
     

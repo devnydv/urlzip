@@ -3,9 +3,8 @@
 
 <head>
   <meta charset="UTF-8">
-
   <!-- <base href="https://urlkeepr.net/dashboard"> -->
-  <title>UrlKeepr - Your Dashboard (Dark Mode)</title>
+  <title>Urljar - Profile page</title>
   <meta name="description" content="Home page of link jar">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{{url_for('static', filename='css/user.css')}}">
@@ -16,12 +15,12 @@
   <div class="container">
     <header class="header">
       <div class="profile">
-        <img class="profile-image" src="profile.jpg" alt="User profile picture, smiling person with short dark hair"
+        <img class="profile-image" src="{{url_for('static', filename='asset/profile.png')}}" alt="User profile picture, smiling person with short dark hair"
           width="60" height="60">
         <div class="profile-info">
-          <h1> {{username}}</h1>
-          <p>web developer</p>
-          <a href="#">httpa://mastiflicks.site &#128279;</a>
+          <h1> {{pname}}</h1>
+          <p>{{userdata[0]["bio"]}}</p>
+          
         </div>
       </div>
       <div class="header-buttons">
@@ -43,31 +42,39 @@
       
       <div class="category-buttons">
         <button class="category-btn active" data-category="all">All</button>
-        <button class="category-btn" data-category="work">Work</button>
+        {% set categories = userdata[0]["category"]%}
+      {%for category in categories%}
+      <div>
+        <button class="category-btn" data-category="{{category |title}}" id="{{loop.index0}}" onclick="filter()">
+          {{category |title}}
+          <!-- <span class="edit-category">&#9998;</span> -->
+        </button>
+      </div>
+      {%endfor%}
         
       </div>
       
     </section>
 
     <main class="url-cards">
-      <div class="url-card" data-category="work">
-        <h3>StackOverflow</h3>
-        <div class="url-link">
-          <a href="https://stackoverflow.com">stackoverflow.com</a>
-          <button class="copy-btn">Copy</button>
-        </div>
-        <p>Developer Q&A forum</p>
-        <div class="url-card-buttons">
-          <button class="share-icon" title="Share this URL">&#128279;</button>
-          <!-- <button class="edit-icon" title="Edit this URL">&#9998;</button>
-          <button class="delete-icon" title="Delete this URL">&#128465;</button> -->
-        </div>
+      {%for link in userdata[0]["links"]%}
+    <div class="url-card" data-category="{{link.cat|title}}">
+      <h3>{{link.title}}</h3>
+      <div class="url-link">
+        <a href="{{link.url}}" target="_blank">{{link.url}}</a>
+        <button class="copy-btn">Copy</button>
       </div>
+      <p>{{link.desc}}</p>
+      <div class="url-card-buttons">
+        <button class="share-icon" title="Share this URL">&#128279;</button>
+
+      </div>
+    </div>
+
+    {%endfor%}
     </main>
 
-    <!-- <div class="add-new-btn-container">
-      <button class="add-new-btn">Add New URL</button>
-    </div> -->
+
   </div>
 
 

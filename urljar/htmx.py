@@ -47,7 +47,7 @@ def cardedit():
     return f'''<form hx-post="/saveedit?id={id}" hx-swap="innerHTML" hx-target="closest .url-card">
         <div class="new-card-input">
           <input type="text" id="title" name="title" placeholder="Title for the URL" value="{arrdata['title']}" required>
-          <input type="text" name="url" placeholder=" Edit Url" value="{arrdata['url']}" required>
+          <input type="url" name="url" placeholder=" Edit Url" value="{arrdata['url']}" required>
           <input type="text" name="desc" placeholder="Edit description" value="{arrdata['desc']}" required>
         </div>
         <button class="copy-btn"> Confirm Edit</button>
