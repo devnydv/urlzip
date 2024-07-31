@@ -1,0 +1,17 @@
+<div class="url-card">
+    <form hx-post="/addurl" hx-swap="outerHTML" hx-target="closest .url-card ">
+        <div class="new-card-input">
+            <input type="text" id="title" name="title" placeholder="Title for the URL" required>
+            <input type="text" name="url" placeholder="Url" required>
+            <input type="text" name="desc" placeholder=" Description for Url" required>
+            <select name="options" id="editCategory" required>
+                <option value="">Select Category</option>
+                {%for category in cat%}
+                <option value="{{category}}">{{category|title}}</option>
+                {%endfor%}
+            </select>
+        </div>
+        <button class="copy-btn"> Confirm Edit</button>
+
+    </form>
+</div>

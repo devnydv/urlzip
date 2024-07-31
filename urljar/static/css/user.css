@@ -482,7 +482,18 @@ footer a {
   color: var(--text-color);
   transition: border-color 0.3s ease;
 }
-
+#editCategory{
+  width: calc( 100% - 1.0rem);
+  padding: 0.6rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  background-color: var(--input-bg-color);
+  border: 1px solid #4a4a4a;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  color: var(--text-color);
+  transition: border-color 0.3s ease;
+}
 .edit-form input:focus,
 .edit-form textarea:focus,
 .edit-form select:focus {

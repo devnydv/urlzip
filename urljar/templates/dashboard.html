@@ -92,20 +92,10 @@
         <button class="delete-icon" title="Delete this URL">&#128465;</button>
       </div>
     </div>
+
+    
     {%for link in userdata[0]["links"]%}
     <div class="url-card" data-category="{{link.cat|title}}">
-      <!-- <form action="">
-        <div class="new-card-input">
-          <input type="text" id="newCategoryName" placeholder="Title for the URL">
-          <input type="text" id="newCategoryName" placeholder="Title for the URL">
-          <input type="text" id="newCategoryName" placeholder="Title for the URL">
-          
-          
-        </div>
-        <button class="copy-btn"> Confirm Edit</button>
-        <button class="copy-btn"> Cancel</button>
-      </form> -->
-
       <h3>{{link.title}}</h3>
       <div class="url-link">
         <a href="{{link.url}}" target="_blank">{{link.url}}</a>
@@ -114,17 +104,19 @@
       <p>{{link.desc}}</p>
       <div class="url-card-buttons">
         <button class="share-icon" title="Share this URL">&#128279;</button>
-        <button class="edit-icon" title="Edit this URL">&#9998;</button>
-        <button class="delete-icon" title="Delete this URL">&#128465;</button>
+        <button hx-post="/cardedit?id={{loop.index0}}" hx-target="closest .url-card" hx-swap="innerHTML" class="edit-icon" title="Edit this URL">&#9998;</button>
+        <button hx-post="/deleteurl?id={{loop.index0}}" hx-on::after-request="load()" class="delete-icon" title="Delete this URL">&#128465;</button>
       </div>
     </div>
 
     {%endfor%}
+
+    <div class="add-new-btn-container">
+      <button class="add-new-btn" hx-post="/addurlform" hx-target="closest div" hx-swap="outerHTML">Add New URL</button>
+    </div>
   </main>
 
-  <div class="add-new-btn-container">
-    <button class="add-new-btn">Add New URL</button>
-  </div>
+  
 </div>
 
 
@@ -208,6 +200,11 @@
     })
   }
   filter()
+
+  function load(){
+    window.location.reload()
+    colsole.log("re")
+  }
 </script>
 
 
@@ -216,7 +213,7 @@
 
 
 
-<!-- <script>
+ <!-- <script>
     document.addEventListener('DOMContentLoaded', function () {
       const categoryButtons = document.querySelectorAll('.category-btn');
       const urlCards = document.querySelectorAll('.url-card');
@@ -518,5 +515,5 @@
         }
       }
     });
-  </script> -->
+  </script>  -->
 {%endblock%}

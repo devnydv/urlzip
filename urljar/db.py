@@ -44,7 +44,7 @@ def usersdata(username):
 # code to insert new category in db
 
 def addcat(uname, cataval):
-    user = list(collection.find({"username": uname}))
+    #user = list(collection.find({"username": uname}))
     filter = {"username": uname}
     update = {"$push": {"category": cataval}}
     result = collection.update_one(filter, update)
@@ -55,3 +55,65 @@ def delcat(uname, cataval):
     filter = {"username": uname}
     update = {"$pull": {"category": cataval}}
     result = collection.update_one(filter, update)
+
+#find and return array to edit
+
+def findarr(uname, ind):
+    user = list(collection.find({"username": uname}))
+    array = user[0]['links'][ind]
+    return array
+
+#save edited url details
+def edited(uname, title, url, desc, ind):
+    user = list(collection.find({"username": uname}))
+    new_values = {
+    "title": title,
+    "url": url,
+    "desc": desc
+}
+    update_query = {f'links.{ind}.{key}': value for key, value in new_values.items()}
+    result = collection.update_one(
+    {'links': {'$exists': True}},
+    {'$set': update_query}
+)
+    
+#delete a url card
+def delcard(uname, id):
+    collection.update_one(
+    {"username": uname},
+    {"$unset": {f"links.{id}":[id]}}
+)
+    collection.update_one(
+    {"username": uname},
+    {"$pull": {"links": None}}
+)
+    
+# function to get all category to show in new url form
+def getcat(uname):
+    user = list(collection.find({"username": uname}))
+    categories = user[0]["category"]
+    return categories
+
+# add new url to db
+def addnew(uname, title, url, desc, cat ):
+    new_object = {
+        "title": title,
+        "url": url,
+        "desc": desc,
+        "cat": cat
+
+        }
+
+# Query to find the document to update
+    query = {"username": uname}
+
+# Add the new object to the array
+    collection.update_one(query, {"$push": {"links": new_object}})
+
+# Fetch the updated document
+    updated_document = collection.find_one(query)
+
+# Get the array and find the index of the new object
+    array = updated_document['links']
+    new_object_index = array.index(new_object) if new_object in array else None
+    return new_object_index
