@@ -1,48 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html"%}
 
-<head>
-  <meta charset="UTF-8">
-  <!-- <base href="https://urlkeepr.net/dashboard"> -->
-  <title>Urljar - Profile page</title>
-  <meta name="description" content="Home page of link jar">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{{url_for('static', filename='css/user.css')}}">
 
-</head>
+{%block head %}
+<!-- <base href="https://urlkeepr.net/dashboard"> -->
+<title>Urljar - Profile page</title>
+<meta name="description" content="Home page of link jar">
+<link rel="stylesheet" href="{{url_for('static', filename='css/user.css')}}">
+{% endblock %}
+{%block content%}
 
-<body>
-  <div class="container">
-    <header class="header">
-      <div class="profile">
-        <img class="profile-image" src="{{url_for('static', filename='asset/profile.png')}}" alt="User profile picture, smiling person with short dark hair"
-          width="60" height="60">
-        <div class="profile-info">
-          <h1> {{pname}}</h1>
-          <p>{{userdata[0]["bio"]}}</p>
-          
-        </div>
+<div class="container">
+  <header class="header">
+    <div class="profile">
+      <img class="profile-image" src="{{url_for('static', filename='asset/profile.png')}}"
+        alt="User profile picture, smiling person with short dark hair" width="60" height="60">
+      <div class="profile-info">
+        <h1> {{pname}}</h1>
+        <p>{{userdata[0]["bio"]}}</p>
+
       </div>
-      <div class="header-buttons">
-        <!-- <a class="edit-btn" href="/edit"> Edit</a> -->
-         
-         {%if logged%}
-         <a class="edit-btn" href="/user/{{username}}">{{username}}</a>
-         <a class="logout-btn" href="/logout">Logout</a>
-         {%else%}
-         <a class="logout-btn" href="/login">Login</a>
-         {%endif%}
-        
-        <button class="share-btn">Share&#128279;</button>
-        <a href="#"></a>
-      </div>
-    </header>
+    </div>
+    <div class="header-buttons">
+      <!-- <a class="edit-btn" href="/edit"> Edit</a> -->
 
-    <section class="category-section">
-      
-      <div class="category-buttons">
-        <button class="category-btn active" data-category="all">All</button>
-        {% set categories = userdata[0]["category"]%}
+      {%if logged%}
+      <a class="edit-btn" href="/user/{{username}}">{{username}}</a>
+      <a class="logout-btn" href="/logout">Logout</a>
+      {%else%}
+      <a class="logout-btn" href="/login">Login</a>
+      {%endif%}
+
+      <button class="share-btn">Share&#128279;</button>
+      <a href="#"></a>
+    </div>
+  </header>
+
+  <section class="category-section">
+
+    <div class="category-buttons">
+      <button class="category-btn active" data-category="all">All</button>
+      {% set categories = userdata[0]["category"]%}
       {%for category in categories%}
       <div>
         <button class="category-btn" data-category="{{category |title}}" id="{{loop.index0}}" onclick="filter()">
@@ -51,13 +48,13 @@
         </button>
       </div>
       {%endfor%}
-        
-      </div>
-      
-    </section>
 
-    <main class="url-cards">
-      {%for link in userdata[0]["links"]%}
+    </div>
+
+  </section>
+
+  <main class="url-cards">
+    {%for link in userdata[0]["links"]%}
     <div class="url-card" data-category="{{link.cat|title}}">
       <h3>{{link.title}}</h3>
       <div class="url-link">
@@ -72,20 +69,20 @@
     </div>
 
     {%endfor%}
-    </main>
+  </main>
 
 
-  </div>
+</div>
 
 
-    
 
-  <footer>
-    <p>UrlKeepr - Your Personal URL Library | <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms of
-        Service</a></p>
-  </footer>
 
-  <!-- <div id="editModal" class="modal">
+<footer>
+  <p>UrlKeepr - Your Personal URL Library | <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms of
+      Service</a></p>
+</footer>
+
+<!-- <div id="editModal" class="modal">
     <div class="modal-content">
       <span class="close">&times;</span>
       <form class="edit-form">
@@ -126,7 +123,7 @@
   </div> -->
 
 
-  <!-- <script>
+<!-- <script>
     document.addEventListener('DOMContentLoaded', function () {
       const categoryButtons = document.querySelectorAll('.category-btn');
       const urlCards = document.querySelectorAll('.url-card');
@@ -429,6 +426,5 @@
       }
     });
   </script> -->
-</body>
 
-</html>
+  {% endblock %}

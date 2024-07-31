@@ -37,7 +37,7 @@ def addcate():
     else:
         return "Please log in"
 
-
+# generate form to edit cards with previous values
 @app.route("/cardedit", methods=["GET", 'POST'])
 def cardedit():
     id = request.args.get('id')
@@ -50,7 +50,7 @@ def cardedit():
           <input type="url" name="url" placeholder=" Edit Url" value="{arrdata['url']}" required>
           <input type="text" name="desc" placeholder="Edit description" value="{arrdata['desc']}" required>
         </div>
-        <button class="copy-btn"> Confirm Edit</button>
+        <button class="add-new-btn"> Confirm Edit</button>
         
       </form>'''
 
@@ -61,7 +61,7 @@ def saveedit():
     title = request.form["title"]
     url = request.form["url"]
     desc = request.form["desc"]
-    print(title)
+    
     edited(uname, title, url,desc, id)
     return f'''
       <h3>{title}</h3>
@@ -123,3 +123,9 @@ def addurl():
     </div>
 
 '''
+
+@app.route("/del", methods=["GET", 'POST'])
+def dele():
+    return '''<div class="add-new-btn-container">
+      <button class="add-new-btn" hx-post="/addurlform" hx-target="closest div" hx-swap="outerHTML">Add New URL</button>
+    </div>'''

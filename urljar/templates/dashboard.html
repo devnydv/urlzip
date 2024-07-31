@@ -5,13 +5,12 @@
 <script src="https://unpkg.com/htmx.org@2.0.1"
   integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/" crossorigin="anonymous"></script>
 <!-- <base href="https://urlkeepr.net/dashboard"> -->
-<title>UrlKeepr - Your Dashboard (Dark Mode)</title>
+<title>UrlKeepr - Your Dashboard</title>
 <meta name="description" content="Home page of link jar">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="{{url_for('static', filename='css/user.css')}}">
 
 {% endblock %}
-
+ 
 {%block content%}
 <div class="container">
   <header class="header">
@@ -72,8 +71,9 @@
       <h3>{{link.title}}</h3>
       <div class="url-link">
         <a href="{{link.url}}" target="_blank">{{link.url}}</a>
-        <button class="copy-btn">Copy</button>
+        <button class="copy-btn">Copy &#128279;</button>
       </div>
+      
       <p>{{link.desc}}</p>
       <div class="url-card-buttons">
         <button class="share-icon" title="Share this URL">&#128279;</button>
@@ -178,6 +178,56 @@
     window.location.reload()
     colsole.log("re")
   }
+
+  //select buton to share and copy
+  const shareProfileBtn = document.querySelector('.share-btn');
+  const shareIcons = document.querySelectorAll('.share-icon');
+  const copyButtons = document.querySelectorAll('.copy-btn');
+
+
+  shareProfileBtn.addEventListener('click', function () {
+    const profileUrl = window.location.href;
+    shareUrl('Check out my UrlKeepr profile', profileUrl);
+  });
+
+  // Share URL functionality
+  shareIcons.forEach(icon => {
+    icon.addEventListener('click', function () {
+      const urlCard = this.closest('.url-card');
+      const urlTitle = urlCard.querySelector('h3').textContent;
+      const urlLink = urlCard.querySelector('a').href;
+      shareUrl(urlTitle, urlLink);
+    });
+  });
+
+  function shareUrl(title, url) {
+    if (navigator.share) {
+      navigator.share({
+        title: title,
+        url: url
+      }).then(() => {
+        console.log('Thanks for sharing!');
+      })
+        .catch(console.error);
+    } else {
+      alert(`Share this URL:\nTitle: ${title}\nLink: ${url}`);
+    }
+  }
+
+  // Copy URL functionality
+  copyButtons.forEach(button => {
+    button.addEventListener('click', function () {
+      const urlLink = this.previousElementSibling.href;
+      navigator.clipboard.writeText(urlLink).then(() => {
+        this.textContent = 'Copied!';
+        setTimeout(() => {
+          this.textContent = 'Copy';
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+    });
+  });
 </script>
 
 

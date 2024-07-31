@@ -1,13 +1,18 @@
-<html>
+{% extends "base.html"%}
 
-<head>
+
+{%block head %}
   <!-- <base href="https://urlkeepr.net/"> -->
   <title>Urljar - Your Personal URL Organizer</title>
+  <meta name="description" content="Organise Your url with urljar. Do not loose any important link ever.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
-</head>
+  
+  {% endblock %}
+ 
+  {%block content%}
 
-<body>
+
   <header>
     <div class="container">
       <nav>
@@ -44,12 +49,12 @@
           <div class="feature-item">
             <div class="feature-icon">&#128278;</div>
             <h3>Easy Bookmarking</h3>
-            <p>Save URLs with a single click using our browser extension.</p>
+            <p>Save URLs with a single click and never loose them.</p>
           </div>
           <div class="feature-item">
             <div class="feature-icon">&#128193;</div>
             <h3>Smart Categories</h3>
-            <p>Organize your bookmarks with custom categories and tags.</p>
+            <p>Organize your Urls with custom categories and tags.</p>
           </div>
           <div class="feature-item">
             <div class="feature-icon">&#128241;</div>
@@ -151,6 +156,4 @@
       });
     }
   </script>
-</body>
-
-</html>
+  {%endblock%}

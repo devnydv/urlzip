@@ -11,7 +11,9 @@
                 {%endfor%}
             </select>
         </div>
-        <button class="copy-btn"> Confirm Edit</button>
+        <button class="add-new-btn" style="margin-bottom: 1rem;"> Confirm Edit</button>
+        
 
     </form>
+    <button class="add-new-btn" hx-get="/del" hx-target="closest .url-card" hx-swap="outerHTML" > cancel</button>
 </div>
