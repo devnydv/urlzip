@@ -82,9 +82,17 @@ def login():
         return render_template("login.html")
     return render_template("login.html")
 
+
+
+# allow user to edit there profile
 @app.route("/edit")
 def edit():
-    return render_template("editp.html")
+    if "username" in session:
+        uname = session["usernmae"]
+
+        return render_template("editp.html")
+    else:
+        return render_template("login.html")
 
 @app.route("/user/<username>")
 def user(username):
