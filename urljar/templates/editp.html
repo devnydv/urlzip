@@ -1,47 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <!-- <base href="https://urlkeepr.net/edit-profile"> -->
-  <title>UrlKeepr - Edit Profile</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{{url_for('static', filename='css/editp.css')}}">
+{% extends "base.html"%}
 
-</head>
+{%block head %}
+<meta charset="UTF-8">
+<!-- <base href="https://urlkeepr.net/edit-profile"> -->
+<title>UrlJar - Edit Profile</title>
+<meta name="description" content="Edit your profile details.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{{url_for('static', filename='css/editp.css')}}">
 
-<body>
-  
-  <div class="container">
-    <h1>Edit Your Profile</h1>
+{% endblock %}
 
-    <form class="profile-form" action="/edit" method="POST">
-      <div class="profile-picture">
-        <img src="{{url_for('static', filename='asset/profile.png')}}" alt="Current profile picture" width="100" height="100">
-        <!-- <input type="file" id="profile-pic" accept="image/*">
+{%block content%}
+
+<div class="container">
+  <h1>Edit Your Profile</h1>
+
+  <form class="profile-form" action="/edit" method="POST">
+    <div class="profile-picture">
+      <img src="{{url_for('static', filename='asset/profile.png')}}" alt="Current profile picture" width="100"
+        height="100">
+      <!-- <input type="file" id="profile-pic" accept="image/*">
         <label for="profile-pic">Change Picture</label> -->
-      </div>
+    </div>
 
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" oninput="usernamecheck(event)" value="{{odata.oname}}" required>
-        <span id="namealert"></span>
-      </div>
-      
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" value="{{odata.oemail}}" required>
-      </div>
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" oninput="usernamecheck(event)" value="{{odata.oname}}" required>
+      <span id="namealert"></span>
+    </div>
 
-      <div class="form-group">
-        <label for="bio">Bio</label>
-        <textarea id="bio" name="bio"
-          rows="4">{{odata.obio}}</textarea>
-      </div>
-      <!-- <div class="form-group">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" value="{{odata.oemail}}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="bio">Bio</label>
+      <textarea id="bio" name="bio" rows="4">{{odata.obio}}</textarea>
+    </div>
+    <!-- <div class="form-group">
         <label for="website">Personal Website</label>
         <input type="text" id="website" name="website" value="https://sarahjohnson.dev">
       </div> -->
-      <!-- <div class="form-group">
+    <!-- <div class="form-group">
         <label for="location">Location</label>
         <input type="text" id="location" name="location" value="San Francisco, CA">
       </div>
@@ -56,64 +57,34 @@
         <input type="text" id="github" name="github" value="sarahj-dev">
       </div> -->
 
-      <button type="submit">Save Changes</button>
-    </form>
+    <button type="submit">Save Changes</button>
+  </form>
 
-    <a href="/user/{{odata.oname}}" class="back-link">Back to Dashboard</a>
-  </div>
+  <a href="/user/{{odata.oname}}" class="back-link">Back to Dashboard</a>
+</div>
 
-  <script>
-    function usernamecheck(event) {
-      let username = document.getElementById("username")
-      let uname = username.value
-      if (uname.length >= 3) {
-        async function check() {
-          let req = await fetch(`/username?name=${uname}`)
-          let res = await req.json()
-          let useralert = document.getElementById("namealert")
-          if (res.case == true) {
-            useralert.innerText = res.massage
-            useralert.style.color = "green"
+<script>
+  function usernamecheck(event) {
+    let username = document.getElementById("username")
+    let uname = username.value
+    if (uname.length >= 3) {
+      async function check() {
+        let req = await fetch(`/username?name=${uname}`)
+        let res = await req.json()
+        let useralert = document.getElementById("namealert")
+        if (res.case == true) {
+          useralert.innerText = res.massage
+          useralert.style.color = "green"
 
-          } else {
-            useralert.innerText = res.massage
-            useralert.style.color = "red"
-          }
+        } else {
+          useralert.innerText = res.massage
+          useralert.style.color = "red"
         }
-        check()
       }
+      check()
     }
+  }
 
-  </script>
-  <!-- <script>
+</script>
 
-
-    document.addEventListener('DOMContentLoaded', function () {
-      const form = document.querySelector('.profile-form');
-      const fileInput = document.getElementById('profile-pic');
-      const profileImage = document.querySelector('.profile-picture img');
-
-      fileInput.addEventListener('change', function (e) {
-        const file = e.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = function (e) {
-            profileImage.src = e.target.result;
-          }
-          reader.readAsDataURL(file);
-        }
-      });
-
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        // Here you would typically send the form data to your backend
-        // For this example, we'll just show an alert
-        alert('Profile updated successfully!');
-        // Redirect to dashboard after successful update
-        window.location.href = '/user';
-      });
-    });
-  </script> -->
-</body>
-
-</html>
+{% endblock %}

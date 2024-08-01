@@ -188,7 +188,7 @@ nav {
   margin-bottom: 1rem;
 }
 
-footer {
+/* footer {
   background-color: var(--surface-color);
   color: var(--text-color);
   text-align: center;
@@ -198,8 +198,21 @@ footer {
 footer a {
   color: var(--secondary-color);
   text-decoration: none;
+} */
+footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: var(--card-bg-color);
+  color: #bdc3c7;
+  font-size: 0.9rem;
 }
 
+footer a {
+  /* color: var(--primary-color); */
+  color: #ebe3e3;
+  text-decoration: none;
+}
 @media (min-width: 768px) {
   .menu-toggle {
     display: none;

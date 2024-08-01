@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{url_for('static', filename='asset/icon.png')}}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{{url_for('static', filename='asset/icon.png')}}">
+    <meta name="keywords" content="urljar, savelinks">
     {% block head %}
 
     {%endblock%}
@@ -14,12 +16,12 @@
     {%endblock%}
     <footer>
         <p>UrlJar - Your Personal URL Library</p>
-        <nav>
+        <div>
           <a href="/privacy">Privacy Policy</a> |
           <a href="/terms">Terms of Service</a> 
          <!-- |
            <a href="/sitemap">Sitemap</a> -->
-        </nav>
+          </div>
         
       </footer>
 </body>

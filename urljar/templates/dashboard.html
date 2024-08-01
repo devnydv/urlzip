@@ -1,12 +1,12 @@
 {% extends "base.html"%}
 
-
 {%block head %}
 <script src="https://unpkg.com/htmx.org@2.0.1"
   integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/" crossorigin="anonymous"></script>
 <!-- <base href="https://urlkeepr.net/dashboard"> -->
-<title>UrlKeepr - Your Dashboard</title>
-<meta name="description" content="Home page of link jar">
+<title>UrlJar - Your Dashboard</title>
+<meta name="description" content="This is your space to save the internet's useful content in one place and use it when you need it. Enjoy {{username| title}}">
+
 <link rel="stylesheet" href="{{url_for('static', filename='css/user.css')}}">
 
 {% endblock %}
@@ -68,7 +68,7 @@
 
     {%for link in userdata[0]["links"]%}
     <div class="url-card" data-category="{{link.cat|title}}">
-      <h3>{{link.title}}</h3>
+      <h3>{{link.title | e}}</h3>
       <div class="url-link">
         <a href="{{link.url}}" target="_blank">{{link.url}}</a>
         <button class="copy-btn">Copy &#128279;</button>

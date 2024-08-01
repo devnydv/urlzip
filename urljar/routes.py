@@ -63,6 +63,9 @@ def signup():
 
 @app.route("/login", methods=["GET", 'POST'])
 def login():
+    if "username" in session:
+        uname = session["username"]
+        return redirect(url_for('user', username=uname) )
     if request.method == "POST":
         form = LoginForm(request.form)
         if form.validate():
@@ -101,14 +104,17 @@ def edit():
             userval = userexist(newuname)
             
             if userval["case"]:
-                bio = request.form["bio"]
-                email = request.form["email"]
-                editp(olduname, newuname, email, bio)
-                # update session name
                 session["username"]= newuname
-                return redirect(url_for('user', username= newuname))
-            else:
-                return redirect(url_for('user', username= olduname))
+
+            bio = clean(request.form["bio"])
+            email = clean(request.form["email"])
+            
+            editp(olduname, newuname, email, bio)
+                # update session name
+                
+            return redirect(url_for('user', username= newuname))
+            #else:
+                #return redirect(url_for('user', username= olduname))
         else:
             return render_template("editp.html", odata = {"oname":olduname, "oemail": oldemail, "obio":oldbio})
     else:

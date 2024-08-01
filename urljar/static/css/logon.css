@@ -154,6 +154,8 @@ button[type="submit"]:hover {
   vertical-align: middle;
 }
 
+
+
 @media (max-width: 480px) {
   .container {
     padding: 1rem;

@@ -3,9 +3,10 @@
 
 {%block head %}
 <!-- <base href="https://urlkeepr.net/dashboard"> -->
-<title>Urljar - Profile page of {{pname}}</title>
-<meta name="description" content="Home page of link jar">
+<title>UrlJar - Profile page of {{pname}}</title>
+<meta name="description" content='{{userdata[0]["bio"]}}'>
 <link rel="stylesheet" href="{{url_for('static', filename='css/user.css')}}">
+
 {% endblock %}
 {%block content%}
 

@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request, session
 from urljar import app
-#from bleach import clean
+from bleach import clean
 from urljar.forms import catname
 from urljar.db import addcat, delcat, findarr, edited, delcard, getcat, addnew
 
@@ -11,7 +11,7 @@ def delete():
     #if request.method == "DELETE":
     if "username" in session:
         uname = session["username"]
-        catval = request.args.get('cat')
+        catval = clean(request.args.get('cat'))
         delcat(uname, catval)
         return "", 200
     else:
@@ -63,9 +63,9 @@ def cardedit():
 def saveedit():
     uname = session["username"]
     id = request.args.get('id')
-    title = request.form["title"]
-    url = request.form["url"]
-    desc = request.form["desc"]
+    title = clean(request.form["title"])
+    url = clean(request.form["url"])
+    desc = clean(request.form["desc"])
     
     edited(uname, title, url,desc, id)
     return f'''
@@ -102,11 +102,11 @@ def addform():
 @app.route("/addurl", methods=["GET", 'POST'])
 def addurl():
     uname = session["username"]
-    id = 1 # get new from db
-    title = request.form["title"]
-    url = request.form["url"]
-    desc = request.form["desc"]
-    cat = request.form["options"].capitalize()
+    #id = 1 # get new from db
+    title = clean(request.form["title"])
+    url = clean(request.form["url"])
+    desc = clean(request.form["desc"])
+    cat = clean(request.form["options"].capitalize())
     id = addnew(uname, title, url, desc, cat )
     
     return f'''
