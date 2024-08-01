@@ -28,6 +28,18 @@ def saveuser(userdata):
     #print(userdata)
     collection.insert_one(userdata)
 
+#edit users prifile
+def editp(olduname, newuname, email, bio):
+    filter = {"username": olduname}
+    # Define the new values for the fields
+    new_values = {"$set": {"username": newuname, "bio":bio, "email":email}}
+    # Update the documents
+    result = collection.update_many(filter, new_values)
+    # Print the number of documents matched and modified
+    print("Matched:", result.matched_count)
+    print("Modified:", result.modified_count)
+
+
 #check if username is unique  or not while signup
 def userexist(uname):
     user = list(collection.find({"username": uname}))

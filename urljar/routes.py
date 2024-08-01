@@ -1,8 +1,9 @@
 from urljar import app
 import bcrypt
+from bleach import clean
 from flask import render_template, flash, redirect, url_for, request, session
 from urljar.forms import SignupForm, LoginForm
-from urljar.db import userlogin, saveuser, userexist, usersdata
+from urljar.db import userlogin, saveuser, userexist, usersdata, editp
 #handle signup page 
 
 @app.route("/")
@@ -85,14 +86,33 @@ def login():
 
 
 # allow user to edit there profile
-@app.route("/edit")
+@app.route("/edit", methods=["GET", 'POST'])
 def edit():
     if "username" in session:
-        uname = session["usernmae"]
-
-        return render_template("editp.html")
+        
+        olduname = session["username"]
+        #get olddata from db
+        olddata = usersdata(olduname)
+        oldemail = olddata[0]['email']
+        oldbio = olddata[0]['bio']
+        print(oldemail)
+        if request.method == "POST":
+            newuname = request.form["username"].lower()
+            userval = userexist(newuname)
+            
+            if userval["case"]:
+                bio = request.form["bio"]
+                email = request.form["email"]
+                editp(olduname, newuname, email, bio)
+                # update session name
+                session["username"]= newuname
+                return redirect(url_for('user', username= newuname))
+            else:
+                return redirect(url_for('user', username= olduname))
+        else:
+            return render_template("editp.html", odata = {"oname":olduname, "oemail": oldemail, "obio":oldbio})
     else:
-        return render_template("login.html")
+        return redirect(url_for('login'))
 
 @app.route("/user/<username>")
 def user(username):

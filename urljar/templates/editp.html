@@ -14,7 +14,7 @@
   <div class="container">
     <h1>Edit Your Profile</h1>
 
-    <form class="profile-form" action="/update-profile" method="POST">
+    <form class="profile-form" action="/edit" method="POST">
       <div class="profile-picture">
         <img src="{{url_for('static', filename='asset/profile.png')}}" alt="Current profile picture" width="100" height="100">
         <!-- <input type="file" id="profile-pic" accept="image/*">
@@ -22,24 +22,25 @@
       </div>
 
       <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" value="Sarah Johnson" required>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" oninput="usernamecheck(event)" value="{{odata.oname}}" required>
+        <span id="namealert"></span>
       </div>
-
+      
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" id="email" name="email" value="sarah.johnson@example.com" required>
+        <input type="email" id="email" name="email" value="{{odata.oemail}}" required>
       </div>
 
       <div class="form-group">
         <label for="bio">Bio</label>
         <textarea id="bio" name="bio"
-          rows="4">Web developer and avid bookmarker. Always looking for new and interesting websites to explore and save.</textarea>
+          rows="4">{{odata.obio}}</textarea>
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="website">Personal Website</label>
         <input type="text" id="website" name="website" value="https://sarahjohnson.dev">
-      </div>
+      </div> -->
       <!-- <div class="form-group">
         <label for="location">Location</label>
         <input type="text" id="location" name="location" value="San Francisco, CA">
@@ -58,10 +59,35 @@
       <button type="submit">Save Changes</button>
     </form>
 
-    <a href="/user" class="back-link">Back to Dashboard</a>
+    <a href="/user/{{odata.oname}}" class="back-link">Back to Dashboard</a>
   </div>
 
   <script>
+    function usernamecheck(event) {
+      let username = document.getElementById("username")
+      let uname = username.value
+      if (uname.length >= 3) {
+        async function check() {
+          let req = await fetch(`/username?name=${uname}`)
+          let res = await req.json()
+          let useralert = document.getElementById("namealert")
+          if (res.case == true) {
+            useralert.innerText = res.massage
+            useralert.style.color = "green"
+
+          } else {
+            useralert.innerText = res.massage
+            useralert.style.color = "red"
+          }
+        }
+        check()
+      }
+    }
+
+  </script>
+  <!-- <script>
+
+
     document.addEventListener('DOMContentLoaded', function () {
       const form = document.querySelector('.profile-form');
       const fileInput = document.getElementById('profile-pic');
@@ -87,7 +113,7 @@
         window.location.href = '/user';
       });
     });
-  </script>
+  </script> -->
 </body>
 
 </html>

@@ -1,5 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request, session
 from urljar import app
+#from bleach import clean
+from urljar.forms import catname
 from urljar.db import addcat, delcat, findarr, edited, delcard, getcat, addnew
 
 
@@ -26,14 +28,17 @@ def addcate():
     if "username" in session:
         uname = session["username"]
         if request.method == "POST":
-            catval =request.form["cat"]
-            catval = catval.lower()
-            capitalcat =catval.capitalize()
-            if catval == "":
-                return '<div><button class="add-category-btn" hx-get="/addcatdiv" hx-target="closest div" hx-swap="outerHTML">Add Category</button></div>', 200
-            else:
+            form = catname(request.form)
+            print(list(form))
+            if form.validate():
+                catval =request.form["cat"]
+                catval = catval.lower()
+                capitalcat =catval.capitalize()
+            #if catval == "":
                 addcat(uname, catval)
                 return f'<div><button class="category-btn" data-category="{capitalcat}" onclick="filter()">{capitalcat}<span class="delete-category" hx-delete="/catdelete" hx-target="closest div"hx-swap="outerHTMl">&times;</span></div><div><button class="add-category-btn" hx-get="/addcatdiv" hx-target="closest div" hx-swap="outerHTML">Add Category</button></div>'
+            else:
+                return '<div><button class="add-category-btn" hx-get="/addcatdiv" hx-target="closest div" hx-swap="outerHTML">Add Category</button></div>', 200
     else:
         return "Please log in"
 
