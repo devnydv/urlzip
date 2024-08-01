@@ -3,7 +3,7 @@
 
 {%block head %}
 <!-- <base href="https://urlkeepr.net/dashboard"> -->
-<title>Urljar - Profile page</title>
+<title>Urljar - Profile page of {{pname}}</title>
 <meta name="description" content="Home page of link jar">
 <link rel="stylesheet" href="{{url_for('static', filename='css/user.css')}}">
 {% endblock %}
@@ -15,7 +15,7 @@
       <img class="profile-image" src="{{url_for('static', filename='asset/profile.png')}}"
         alt="User profile picture, smiling person with short dark hair" width="60" height="60">
       <div class="profile-info">
-        <h1> {{pname}}</h1>
+        <h1> {{pname |title}}</h1>
         <p>{{userdata[0]["bio"]}}</p>
 
       </div>
@@ -31,12 +31,16 @@
       {%endif%}
 
       <button class="share-btn">Share&#128279;</button>
-      <a href="#"></a>
+      
     </div>
   </header>
 
   <section class="category-section">
-
+    <div class="category-header">
+      <h2>Categories</h2>
+      <!--    <button class="add-category-btn" hx-get="/addcatdiv" hx-target=".category-buttons" hx-swap="beforeend">Add
+        Category</button>  -->
+    </div>
     <div class="category-buttons">
       <button class="category-btn active" data-category="all">All</button>
       {% set categories = userdata[0]["category"]%}
@@ -77,10 +81,10 @@
 
 
 
-<footer>
+<!-- <footer>
   <p>UrlKeepr - Your Personal URL Library | <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms of
       Service</a></p>
-</footer>
+</footer> -->
 
 <!-- <div id="editModal" class="modal">
     <div class="modal-content">
@@ -123,26 +127,12 @@
   </div> -->
 
 
-<!-- <script>
-    document.addEventListener('DOMContentLoaded', function () {
+  <script>
+
+    function filter() {
       const categoryButtons = document.querySelectorAll('.category-btn');
       const urlCards = document.querySelectorAll('.url-card');
-      const addCategoryBtn = document.querySelector('.add-category-btn');
-      const newCategoryInput = document.querySelector('.new-category-input');
-      const newCategoryNameInput = document.getElementById('newCategoryName');
-      const submitNewCategoryBtn = document.getElementById('submitNewCategory');
-      const shareProfileBtn = document.querySelector('.share-btn');
-      const shareIcons = document.querySelectorAll('.share-icon');
-      const editIcons = document.querySelectorAll('.edit-icon');
-      const deleteIcons = document.querySelectorAll('.delete-icon');
-      const copyButtons = document.querySelectorAll('.copy-btn');
-      const editModal = document.getElementById('editModal');
-      const addModal = document.getElementById('addModal');
-      const closeModals = document.querySelectorAll('.close');
-      const editForm = document.querySelector('#editModal .edit-form');
-      const addForm = document.querySelector('#addModal .edit-form');
-      const addNewBtn = document.querySelector('.add-new-btn');
-
+  
       function filterUrlCards(category) {
         urlCards.forEach(card => {
           if (category === 'all' || card.dataset.category === category) {
@@ -152,236 +142,64 @@
           }
         });
       }
-
+  
       categoryButtons.forEach(button => {
         button.addEventListener('click', function (e) {
           if (e.target.classList.contains('delete-category')) {
             return; // Don't filter when clicking the delete button
           }
           const category = this.dataset.category;
-
+  
           // Update active button
           categoryButtons.forEach(btn => btn.classList.remove('active'));
           this.classList.add('active');
-
+  
           // Filter URL cards
           filterUrlCards(category);
         });
-
-        // Add delete functionality
-        const deleteBtn = button.querySelector('.delete-category');
-        if (deleteBtn) {
-          deleteBtn.addEventListener('click', function (e) {
-            e.stopPropagation(); // Prevent triggering the category filter
-            const categoryName = this.parentElement.textContent.trim();
-            if (confirm(`Are you sure you want to delete the category "${categoryName}"?`)) {
-              this.parentElement.remove();
-              // You might want to handle removing associated URLs or changing their category here
-              if (this.parentElement.classList.contains('active')) {
-                document.querySelector('.category-btn[data-category="all"]').click();
-              }
-            }
-          });
-        }
+      })
+    }
+    filter()
+  
+    
+    //select buton to share and copy
+    const shareProfileBtn = document.querySelector('.share-btn');
+    const shareIcons = document.querySelectorAll('.share-icon');
+    const copyButtons = document.querySelectorAll('.copy-btn');
+  
+  
+    shareProfileBtn.addEventListener('click', function () {
+      const profileUrl = window.location.href;
+      shareUrl('Check out my UrlKeepr profile', profileUrl);
+    });
+  
+    // Share URL functionality
+    shareIcons.forEach(icon => {
+      icon.addEventListener('click', function () {
+        const urlCard = this.closest('.url-card');
+        const urlTitle = urlCard.querySelector('h3').textContent;
+        const urlLink = urlCard.querySelector('a').href;
+        shareUrl(urlTitle, urlLink);
       });
-
-      addCategoryBtn.addEventListener('click', function () {
-        newCategoryInput.style.display = 'block';
-        newCategoryNameInput.focus();
-      });
-
-      submitNewCategoryBtn.addEventListener('click', function () {
-        const newCategoryName = newCategoryNameInput.value.trim();
-        if (newCategoryName) {
-          const newCategoryBtn = document.createElement('button');
-          newCategoryBtn.className = 'category-btn';
-          newCategoryBtn.dataset.category = newCategoryName.toLowerCase().replace(/\s+/g, '-');
-          newCategoryBtn.innerHTML = `${newCategoryName}<span class="delete-category">&times;</span>`;
-
-          // Add event listeners to the new button
-          newCategoryBtn.addEventListener('click', function () {
-            categoryButtons.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-            filterUrlCards(this.dataset.category);
-          });
-
-          const deleteBtn = newCategoryBtn.querySelector('.delete-category');
-          deleteBtn.addEventListener('click', function (e) {
-            e.stopPropagation();
-            if (confirm(`Are you sure you want to delete the category "${newCategoryName}"?`)) {
-              newCategoryBtn.remove();
-              if (newCategoryBtn.classList.contains('active')) {
-                document.querySelector('.category-btn[data-category="all"]').click();
-              }
-            }
-          });
-
-          document.querySelector('.category-buttons').appendChild(newCategoryBtn);
-          newCategoryNameInput.value = '';
-          newCategoryInput.style.display = 'none';
-        }
-      });
-
-      // Hide new category input when clicking outside
-      document.addEventListener('click', function (e) {
-        if (!newCategoryInput.contains(e.target) && e.target !== addCategoryBtn) {
-          newCategoryInput.style.display = 'none';
-        }
-      });
-
-      // Share profile functionality
-      shareProfileBtn.addEventListener('click', function () {
-        const profileUrl = window.location.href;
-        shareUrl('Check out my UrlKeepr profile', profileUrl);
-      });
-
-      // Share URL functionality
-      shareIcons.forEach(icon => {
-        icon.addEventListener('click', function () {
-          const urlCard = this.closest('.url-card');
-          const urlTitle = urlCard.querySelector('h3').textContent;
-          const urlLink = urlCard.querySelector('a').href;
-          shareUrl(urlTitle, urlLink);
-        });
-      });
-
-      function shareUrl(title, url) {
-        if (navigator.share) {
-          navigator.share({
-            title: title,
-            url: url
-          }).then(() => {
-            console.log('Thanks for sharing!');
-          })
-            .catch(console.error);
-        } else {
-          alert(`Share this URL:\nTitle: ${title}\nLink: ${url}`);
-        }
+    });
+  
+    function shareUrl(title, url) {
+      if (navigator.share) {
+        navigator.share({
+          title: title,
+          url: url
+        }).then(() => {
+          console.log('Thanks for sharing!');
+        })
+          .catch(console.error);
+      } else {
+        alert(`Share this URL:\nTitle: ${title}\nLink: ${url}`);
       }
-
-      // Copy URL functionality
-      copyButtons.forEach(button => {
-        button.addEventListener('click', function () {
-          const urlLink = this.previousElementSibling.href;
-          navigator.clipboard.writeText(urlLink).then(() => {
-            this.textContent = 'Copied!';
-            setTimeout(() => {
-              this.textContent = 'Copy';
-            }, 2000);
-          }).catch(err => {
-            console.error('Failed to copy: ', err);
-          });
-        });
-      });
-
-      // Edit URL functionality
-      editIcons.forEach(icon => {
-        icon.addEventListener('click', function () {
-          const urlCard = this.closest('.url-card');
-          const urlTitle = urlCard.querySelector('h3').textContent;
-          const urlLink = urlCard.querySelector('a').href;
-          const urlDescription = urlCard.querySelector('p').textContent;
-          const urlCategory = urlCard.dataset.category;
-
-          // Populate the edit form
-          document.getElementById('editTitle').value = urlTitle;
-          document.getElementById('editUrl').value = urlLink;
-          document.getElementById('editDescription').value = urlDescription;
-          document.getElementById('editCategory').value = urlCategory;
-
-          // Show the modal
-          editModal.style.display = 'block';
-        });
-      });
-
-      // Delete URL functionality
-      deleteIcons.forEach(icon => {
-        icon.addEventListener('click', function () {
-          const urlCard = this.closest('.url-card');
-          const urlTitle = urlCard.querySelector('h3').textContent;
-          if (confirm(`Are you sure you want to delete "${urlTitle}"?`)) {
-            urlCard.remove();
-          }
-        });
-      });
-
-      // Add New URL functionality
-      addNewBtn.addEventListener('click', function () {
-        // Clear the form
-        document.getElementById('newTitle').value = '';
-        document.getElementById('newUrl').value = '';
-        document.getElementById('newDescription').value = '';
-        document.getElementById('newCategory').value = '';
-
-        // Show the modal
-        addModal.style.display = 'block';
-      });
-
-      // Close modals when clicking on X
-      closeModals.forEach(closeBtn => {
-        closeBtn.addEventListener('click', function () {
-          this.closest('.modal').style.display = 'none';
-        });
-      });
-
-      // Close modals when clicking outside of them
-      window.addEventListener('click', function (event) {
-        if (event.target.classList.contains('modal')) {
-          event.target.style.display = 'none';
-        }
-      });
-
-      // Handle edit form submission
-      editForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        // Here you would typically send the data to your backend
-        // For this example, we'll just update the card directly
-        const activeCard = document.querySelector('.url-card .edit-icon:hover')?.closest('.url-card');
-        if (activeCard) {
-          activeCard.querySelector('h3').textContent = document.getElementById('editTitle').value;
-          activeCard.querySelector('a').href = document.getElementById('editUrl').value;
-          activeCard.querySelector('a').textContent = new URL(document.getElementById('editUrl').value).hostname;
-          activeCard.querySelector('p').textContent = document.getElementById('editDescription').value;
-          activeCard.dataset.category = document.getElementById('editCategory').value;
-        }
-        editModal.style.display = 'none';
-      });
-
-      // Handle add form submission
-      addForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        // Here you would typically send the data to your backend
-        // For this example, we'll just add a new card to the list
-        const newCard = document.createElement('div');
-        newCard.className = 'url-card';
-        newCard.dataset.category = document.getElementById('newCategory').value;
-        const newUrl = document.getElementById('newUrl').value;
-        newCard.innerHTML = `
-        <h3>${document.getElementById('newTitle').value}</h3>
-        <div class="url-link">
-          <a href="${newUrl}">${new URL(newUrl).hostname}</a>
-          <button class="copy-btn">Copy</button>
-        </div>
-        <p>${document.getElementById('newDescription').value}</p>
-        <div class="url-card-buttons">
-          <button class="share-icon" title="Share this URL">&#128279;</button>
-          <button class="edit-icon" title="Edit this URL">&#9998;</button>
-          <button class="delete-icon" title="Delete this URL">&#128465;</button>
-        </div>
-      `;
-        document.querySelector('.url-cards').appendChild(newCard);
-
-        // Add event listeners to the new card
-        newCard.querySelector('.copy-btn').addEventListener('click', copyUrlHandler);
-        newCard.querySelector('.share-icon').addEventListener('click', shareUrlHandler);
-        newCard.querySelector('.edit-icon').addEventListener('click', editUrlHandler);
-        newCard.querySelector('.delete-icon').addEventListener('click', deleteUrlHandler);
-
-        addModal.style.display = 'none';
-      });
-
-      // Handlers for new cards
-      function copyUrlHandler() {
+    }
+  
+    // Copy URL functionality
+    copyButtons.forEach(button => {
+      button.addEventListener('click', function () {
         const urlLink = this.previousElementSibling.href;
         navigator.clipboard.writeText(urlLink).then(() => {
           this.textContent = 'Copied!';
@@ -391,40 +209,8 @@
         }).catch(err => {
           console.error('Failed to copy: ', err);
         });
-      }
-
-      function shareUrlHandler() {
-        const urlCard = this.closest('.url-card');
-        const urlTitle = urlCard.querySelector('h3').textContent;
-        const urlLink = urlCard.querySelector('a').href;
-        shareUrl(urlTitle, urlLink);
-      }
-
-      function editUrlHandler() {
-        const urlCard = this.closest('.url-card');
-        const urlTitle = urlCard.querySelector('h3').textContent;
-        const urlLink = urlCard.querySelector('a').href;
-        const urlDescription = urlCard.querySelector('p').textContent;
-        const urlCategory = urlCard.dataset.category;
-
-        // Populate the edit form
-        document.getElementById('editTitle').value = urlTitle;
-        document.getElementById('editUrl').value = urlLink;
-        document.getElementById('editDescription').value = urlDescription;
-        document.getElementById('editCategory').value = urlCategory;
-
-        // Show the modal
-        editModal.style.display = 'block';
-      }
-
-      function deleteUrlHandler() {
-        const urlCard = this.closest('.url-card');
-        const urlTitle = urlCard.querySelector('h3').textContent;
-        if (confirm(`Are you sure you want to delete "${urlTitle}"?`)) {
-          urlCard.remove();
-        }
-      }
+      });
     });
-  </script> -->
+  </script>
 
   {% endblock %}

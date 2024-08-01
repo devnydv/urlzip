@@ -66,12 +66,12 @@ def login():
         form = LoginForm(request.form)
         if form.validate():
             # Handle form submission, e.g., save user data
-             
-            logindata = userlogin(request.form["username"], request.form["password"])
+            uname = request.form["username"].lower()
+            logindata = userlogin(uname, request.form["password"])
             
             if logindata['case']:
-                session["username"] = request.form["username"]
-                return redirect(url_for('user', username= request.form["username"]))
+                session["username"] = uname
+                return redirect(url_for('user', username= uname))
             else:
                 flash(logindata['massage'])
                 
@@ -129,5 +129,24 @@ def logout():
         #return"lol"
 
 
+# Error handling
+@app.errorhandler(404)
+def page_not_found(e):
+    return redirect(url_for('error_404'))
 
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template("nouser.html") , 404
+    #return redirect(url_for('error_500'))
+
+# Custom error pages
+@app.route('/error_404')
+def error_404():
+    return render_template("nouser.html") , 404
+    #return "This is a custom 404 error page.", 404
+
+@app.route('/error_500')
+def error_500():
+    return render_template("nouser.html") , 404
+    #return "This is a custom 500 error page.", 500
     

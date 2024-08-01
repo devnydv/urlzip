@@ -1,6 +1,6 @@
 
 :root {
-  --primary-color: #3498db;
+  --primary-color: #1ba3e2;
   --secondary-color: #2ecc71;
   --background-color: #1a1a1a;
   --text-color: #f0f0f0;
@@ -264,7 +264,7 @@ body {
 }
 
 .url-card h3 {
-  margin: 0 0 0.5rem 0;
+  margin: 0.5rem 0 0.5rem 0;
   color: var(--primary-color);
   font-size: 1.2rem;
 }
@@ -416,7 +416,8 @@ footer {
 }
 
 footer a {
-  color: var(--primary-color);
+  /* color: var(--primary-color); */
+  color: #ebe3e3;
   text-decoration: none;
 }
 
