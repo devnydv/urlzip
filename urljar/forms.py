@@ -67,6 +67,6 @@ class catname(Form):
         validators=[
             DataRequired(message="Username is required."),
             Length(min=1, max=20, message="Username must be between 3 and 20 characters."),
-            Regexp('^[a-zA-Z0-9]*$', message="Username must not contain special characters.")
+            Regexp('^[a-zA-Z0-9 ]*$', message="Username must not contain special characters.")
         ]
     )
