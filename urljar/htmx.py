@@ -10,9 +10,11 @@ from urljar.db import addcat, delcat, findarr, edited, delcard, getcat, addnew
 def delete():
     #if request.method == "DELETE":
     if "username" in session:
+        print("del")
         uname = session["username"]
         catval = clean(request.args.get('cat'))
         delcat(uname, catval)
+        
         return "", 200
     else:
         return "Please login or sign up"
@@ -36,7 +38,7 @@ def addcate():
                 capitalcat =catval.capitalize()
             #if catval == "":
                 addcat(uname, catval)
-                return f'<div><button class="category-btn" data-category="{capitalcat}" onclick="filter()">{capitalcat}<span class="delete-category" hx-delete="/catdelete" hx-target="closest div"hx-swap="outerHTMl">&times;</span></div><div><button class="add-category-btn" hx-get="/addcatdiv" hx-target="closest div" hx-swap="outerHTML">Add Category</button></div>'
+                return f'<div><button class="category-btn" data-category="{capitalcat}" onclick="filter()">{capitalcat}<span class="delete-category" hx-delete="/catdelete?cat=catval" hx-target="closest div"hx-swap="outerHTMl">&times;</span></div><div><button class="add-category-btn" hx-get="/addcatdiv" hx-target="closest div" hx-swap="outerHTML">Add Category</button></div>'
             else:
                 return '<div><button class="add-category-btn" hx-get="/addcatdiv" hx-target="closest div" hx-swap="outerHTML">Add Category</button></div>', 200
     else:
