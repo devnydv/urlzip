@@ -1,0 +1,180 @@
+<html>
+
+<head>
+  <!-- <base href="https://urlkeepr.net/terms"> -->
+  <title>UrlKJar - Terms of Service</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --primary-color: #3498db;
+      --secondary-color: #2ecc71;
+      --background-color: #1a1a1a;
+      --text-color: #f0f0f0;
+      --card-bg-color: #2c2c2c;
+      --hover-color: #4a4a4a;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      color: var(--primary-color);
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .subheader {
+      color: var(--secondary-color);
+      font-size: 1.2rem;
+    }
+
+    main {
+      background-color: var(--card-bg-color);
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      color: var(--primary-color);
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      margin-bottom: 1rem;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    a {
+      color: var(--primary-color);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: var(--secondary-color);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      padding: 1rem;
+      background-color: var(--card-bg-color);
+      border-radius: 10px;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .subheader {
+        font-size: 1rem;
+      }
+
+      main {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>UrlJar Terms of Service</h1>
+      <p class="subheader">Last updated: May 30, 2024</p>
+    </header>
+
+    <main>
+      <p>Welcome to UrlJar. By using our service, you agree to comply with and be bound by the following terms and
+        conditions. Please read them carefully.</p>
+
+      <h2>1. Acceptance of Terms</h2>
+      <p>By accessing or using UrlKJar, you agree to be bound by these Terms of Service and all applicable laws and
+        regulations. If you do not agree with any part of these terms, you may not use our service.</p>
+
+      <h2>2. Description of Service</h2>
+      <p>UrlJar is a bookmarking service that allows users to save, organize, and share URLs. We reserve the right to
+        modify or discontinue the service at any time without notice.</p>
+
+      <h2>3. User Accounts</h2>
+      <ul>
+        <li>You must provide accurate and complete information when creating an account.</li>
+        <li>You are responsible for maintaining the security of your account and password.</li>
+        <li>You agree to notify us immediately of any unauthorized use of your account.</li>
+      </ul>
+
+      <h2>4. User Content</h2>
+      <p>You retain all rights to the content you submit to UrlJar. By submitting content, you grant us a
+        non-exclusive, worldwide, royalty-free license to use, modify, and display the content in connection with our
+        service.</p>
+
+      <h2>5. Prohibited Uses</h2>
+      <p>You agree not to use UrlJar for any unlawful purpose or in any way that could damage, disable, or impair our
+        service. Prohibited activities include, but are not limited to:</p>
+      <ul>
+        <li>Sharing malicious links or content</li>
+        <li>Spamming or harassment</li>
+        <li>Attempting to gain unauthorized access to our systems</li>
+      </ul>
+
+      <h2>6. Intellectual Property</h2>
+      <p>The UrlJar service, including its original content, features, and functionality, is owned by UrlJar and
+        protected by international copyright, trademark, and other intellectual property laws.</p>
+
+      <h2>7. Limitation of Liability</h2>
+      <p>UrlJar shall not be liable for any indirect, incidental, special, consequential, or punitive damages
+        resulting from your use of or inability to use the service.</p>
+
+      <h2>8. Changes to Terms</h2>
+      <p>We reserve the right to modify these Terms of Service at any time. We will notify users of any significant
+        changes via email or through the service.</p>
+
+      <h2>9. Governing Law</h2>
+      <p>These Terms of Service shall be governed by and construed in accordance with the laws of the jurisdiction in
+        which UrlJar is headquartered, without regard to its conflict of law provisions.</p>
+
+      <h2>10. Contact Information</h2>
+      <p>If you have any questions about these Terms of Service, please contact us at <a
+          href="mailto:paycodehelp+url@gamil.com">paycodehelp+url@gamil.com</a>.</p>
+    </main>
+
+    <footer>
+      <p>&copy; 2024 UrlJar. All rights reserved. | <a href="/privacy">Privacy Policy</a> | 
+        {%if uname == "":%}
+        <a href="/login">Login</a></p>
+        {%else:%}
+        <a href="/user/{{uname}}">Dashboard</a></p>
+        {%endif%}
+    </footer>
+  </div>
+</body>
+
+</html>

@@ -163,6 +163,14 @@ def logout():
         #return"lol"
 
 
+@app.route("/terms")
+def terms():
+    if "username" in session:
+        uname = session["username"]
+        return render_template("terms.html", uname = uname)
+    else :
+        return render_template("terms.html", uname = "")
+
 # Error handling
 @app.errorhandler(404)
 def page_not_found(e):
