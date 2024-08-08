@@ -6,6 +6,7 @@ import bcrypt
 
 api = os.getenv('db')
 
+
 url = api
 client = MongoClient(url)
 db = client.urljar
@@ -76,18 +77,21 @@ def findarr(uname, ind):
     return array
 
 #save edited url details
+#save edited url details
+
 def edited(uname, title, url, desc, ind):
-    user = list(collection.find({"username": uname}))
-    new_values = {
-    "title": title,
-    "url": url,
-    "desc": desc
-}
-    update_query = {f'links.{ind}.{key}': value for key, value in new_values.items()}
+    # Construct the update query to update the specific fields within the links array
+    update_query = {
+        f'links.{ind}.title': title,
+        f'links.{ind}.url': url,
+        f'links.{ind}.desc': desc
+    }
+    
+    # Perform the update operation
     result = collection.update_one(
-    {'links': {'$exists': True}},
-    {'$set': update_query}
-)
+        {'username': uname, f'links.{ind}': {'$exists': True}},
+        {'$set': update_query}
+    )
     
 #delete a url card
 def delcard(uname, id):
