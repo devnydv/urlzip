@@ -180,7 +180,7 @@
       icon.addEventListener('click', function () {
         const urlCard = this.closest('.url-card');
         const urlTitle = urlCard.querySelector('h3').textContent;
-        const urlLink = urlCard.querySelector('a').href;
+        const urlLink = urlCard.querySelector('input').value;
         shareUrl(urlTitle, urlLink);
       });
     });
@@ -202,12 +202,11 @@
     // Copy URL functionality
     copyButtons.forEach(button => {
       button.addEventListener('click', function () {
-        const urlLink = this.previousElementSibling.href;
+        const urlLink = this.previousElementSibling.value;
         navigator.clipboard.writeText(urlLink).then(() => {
-          this.textContent = 'Copied!';
           setTimeout(() => {
-            this.textContent = 'Copy';
-          }, 2000);
+            this.style.backgroundColor ='#1ba3e2';
+        }, 2000);
         }).catch(err => {
           console.error('Failed to copy: ', err);
         });

@@ -3,8 +3,8 @@ from pymongo.mongo_client import MongoClient
 import os
 import bcrypt
 #database config
-api = "mongodb+srv://bittumail:12356789@cluster0.fqrswkj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-#api = os.getenv('db')
+
+api = os.getenv('db')
 
 
 url = api
