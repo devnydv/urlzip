@@ -6,6 +6,7 @@ import bcrypt
 api = "mongodb+srv://bittumail:12356789@cluster0.fqrswkj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 #api = os.getenv('db')
 
+
 url = api
 client = MongoClient(url)
 db = client.urljar
@@ -76,6 +77,10 @@ def findarr(uname, ind):
     return array
 
 #save edited url details
+<<<<<<< HEAD
+=======
+#save edited url details
+>>>>>>> dbce618ebaa9798233c9f5c2fee3c43e08440402
 
 def edited(uname, title, url, desc, ind):
     # Construct the update query to update the specific fields within the links array
@@ -89,7 +94,11 @@ def edited(uname, title, url, desc, ind):
     result = collection.update_one(
         {'username': uname, f'links.{ind}': {'$exists': True}},
         {'$set': update_query}
+<<<<<<< HEAD
     )   
+=======
+    )
+>>>>>>> dbce618ebaa9798233c9f5c2fee3c43e08440402
     
 #delete a url card
 def delcard(uname, id):

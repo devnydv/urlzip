@@ -1,4 +1,8 @@
 __pycache__
+<<<<<<< HEAD
 test
 mongolink.txt
 db.py
+=======
+mongolink.txt
+>>>>>>> dbce618ebaa9798233c9f5c2fee3c43e08440402

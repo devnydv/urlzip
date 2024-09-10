@@ -38,7 +38,7 @@ def addcate():
                 capitalcat =catval.capitalize()
             #if catval == "":
                 addcat(uname, catval)
-                return f'<div><button class="category-btn" data-category="{capitalcat}" onclick="filter()">{capitalcat}<span class="delete-category" hx-delete="/catdelete?cat=catval" hx-target="closest div"hx-swap="outerHTMl">&times;</span></div><div><button class="add-category-btn" hx-get="/addcatdiv" hx-target="closest div" hx-swap="outerHTML">Add Category</button></div>'
+                return f'<div><button class="category-btn" data-category="{capitalcat}" onclick="filter()">{capitalcat}<span class="delete-category" hx-get="/catdelete?cat={catval}" hx-target="closest div"hx-swap="outerHTMl">&times;</span></div><div><button class="add-category-btn" hx-get="/addcatdiv" hx-target="closest div" hx-swap="outerHTML">Add Category</button></div>'
             else:
                 return '<div><button class="add-category-btn" hx-get="/addcatdiv" hx-target="closest div" hx-swap="outerHTML">Add Category</button></div>', 200
     else:
