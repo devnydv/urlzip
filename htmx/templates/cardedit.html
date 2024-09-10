@@ -1,0 +1,9 @@
+<form hx-post="/saveedit?id={{data['id']}}" hx-swap="innerHTML" hx-target="closest .url-card">
+    <div class="new-card-input">
+        
+        <input type="text" id="title" name="title" placeholder="Title for the URL" value="{{data['arrdata']['title']}}" required>
+        <input type="url" name="url" placeholder=" Edit Url" value="{{data['arrdata']['url']}}" required>
+        <input type="text" name="desc" placeholder="Edit description" value="{{data['arrdata']['desc']}}" required>
+    </div>
+    <button class="add-new-btn"> Confirm Edit</button>
+</form>

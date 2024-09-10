@@ -2,94 +2,117 @@
 
 {%block head %}
 <script src="https://unpkg.com/htmx.org@2.0.1"
-  integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/" crossorigin="anonymous"></script>
+    integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/"
+    crossorigin="anonymous"></script>
 <!-- <base href="https://urlkeepr.net/dashboard"> -->
 <title>UrlJar - Your Dashboard</title>
-<meta name="description" content="This is your space to save the internet's useful content in one place and use it when you need it. Enjoy {{username| title}}">
+<meta name="description"
+    content="This is your space to save the internet's useful content in one place and use it when you need it. Enjoy {{username| title}}">
 
-<link rel="stylesheet" href="{{url_for('static', filename='css/user.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='testing/user.css')}}">
 
 {% endblock %}
- 
+
 {%block content%}
 <div class="container">
-  <header class="header">
-    <div class="profile">
-      <img class="profile-image" src="{{url_for('static', filename='asset/profile.png')}}" alt="User profile picture, smiling person with short dark hair"
-        width="60" height="60">
-      <div class="profile-info">
-        <h1>Welcome back, {{username| title}}</h1>
-        <p>{{userdata[0]["bio"]}} </p>
-        <!-- <a href="#">httpa://mastiflicks.site &#128279;</a> -->
-      </div>
-    </div>
-    <div class="header-buttons">
-      <a class="edit-btn" href="/edit"> Edit</a>
-      <a class="logout-btn" id="logout" href="/logout">Logout</a>
-      <button class="share-btn">Share&#128279;</button>
-      
-    </div>
-  </header>
+    <header class="header">
+        <div class="profile">
+            <img class="profile-image" src="{{url_for('static', filename='asset/profile.png')}}"
+                alt="User profile picture, smiling person with short dark hair" width="60" height="60">
+            <div class="profile-info">
+                <h1>Welcome backdfgsdfgsdfg, {{username| title}}</h1>
+                <p>{{userdata[0]["bio"]}} </p>
+                <!-- <a href="#">httpa://mastiflicks.site &#128279;</a> -->
+            </div>
+        </div>
+        <div class="header-buttons">
+            <a class="edit-btn" href="/edit"> Edit</a>
+            <a class="logout-btn" id="logout" href="/logout">Logout</a>
+            <button class="share-btn">Share&#128279;</button>
 
-  <section class="category-section">
-    <div class="category-header">
-      <h2>Categories</h2>
-      <!--    <button class="add-category-btn" hx-get="/addcatdiv" hx-target=".category-buttons" hx-swap="beforeend">Add
+        </div>
+    </header>
+
+    <section class="category-section">
+        <div class="category-header">
+            <h2>Categories</h2>
+            <!--    <button class="add-category-btn" hx-get="/addcatdiv" hx-target=".category-buttons" hx-swap="beforeend">Add
         Category</button>  -->
-    </div>
-    <div class="category-buttons">
-      <!-- category buttons -->
-      <button class="category-btn active" data-category="all" onclick="filter()">All</button>
+        </div>
+        <div class="category-buttons">
+            <!-- category buttons -->
+            <button class="category-btn active" data-category="all" onclick="filter()">All</button>
+
+            {% set categories = userdata[0]["category"]%}
+            {%for category in categories%}
+            <div>
+                <button class="category-btn" data-category="{{category |title}}" id="{{loop.index0}}"
+                    onclick="filter()">
+                    {{category |title}}
+                    <span class="delete-category" hx-delete="/catdelete?cat={{category}}" hx-swap="outerHTMl"
+                        hx-target="closest div">&times;</span>
+                    <!-- <span class="edit-category">&#9998;</span> -->
+                </button>
+            </div>
+            {%endfor%}
+            <div>
+                <button class="add-category-btn" hx-get="/addcatdiv" hx-target="closest div" hx-swap="outerHTML">Add
+                    Category</button>
+            </div>
+        </div>
+        <div class="new-category-input">
+            <!-- <input type="text" id="newCategoryName" placeholder="Enter new category name"> -->
+            <!-- <button id="submitNewCategory">Add</button> -->
+        </div>
+    </section>
+    
+    <!-- url cards -->
+    <main class="url-cards">
       
-      {% set categories = userdata[0]["category"]%}
-      {%for category in categories%}
-      <div>
-        <button class="category-btn" data-category="{{category |title}}" id="{{loop.index0}}" onclick="filter()">
-          {{category |title}}
-          <span class="delete-category" hx-delete="/catdelete?cat={{category}}" hx-swap="outerHTMl"
-            hx-target="closest div">&times;</span>
-          <!-- <span class="edit-category">&#9998;</span> -->
-        </button>
+      <div class="add-new-btn-container" >
+        <button class="add-new-btn" hx-post="/addurlform"  hx-target="closest div" hx-swap="outerHTML">Add New
+            URL</button>
       </div>
-      {%endfor%}
-      <div>
-        <button class="add-category-btn" hx-get="/addcatdiv" hx-target="closest div" hx-swap="outerHTML">Add
-          Category</button>
-      </div>
-    </div>
-    <div class="new-category-input">
-      <!-- <input type="text" id="newCategoryName" placeholder="Enter new category name"> -->
-      <!-- <button id="submitNewCategory">Add</button> -->
-    </div>
-  </section>
+    
+    
+        {%for link in userdata[0]["links"]%}
+        <div class="url-card" data-category="{{link.cat|title}}">
+            <h3 class="card-title">{{link.title | e}}</h3>
+            
+            <div class="url-link">
+              <input type="text" class="link-input" value="{{link.url}}" readonly="">
+                
+                <button class="copy-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z">
+                        </path>
+                        <path
+                            d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+            <div class="categories">
+              <span class="category-tag">cate</span>
+          </div>
+            <p class="description">{{link.desc}}</p>
+            <div class="url-card-buttons">
+                <button class="share-icon" title="Share this URL">&#128279;</button>
+                <button hx-post="/cardedit?id={{loop.index0}}" hx-target="closest .url-card" hx-swap="innerHTML"
+                    class="edit-icon" title="Edit this URL">&#9998;</button>
+                <button hx-post="/deleteurl?id={{loop.index0}}" hx-on::after-request="load()" class="delete-icon"
+                    title="Delete this URL">&#128465;</button>
+            </div>
+        </div>
 
-  <!-- url cards -->
-  <main class="url-cards">
+        {%endfor%}
+        
+        
+    </main>
 
-    {%for link in userdata[0]["links"]%}
-    <div class="url-card" data-category="{{link.cat|title}}">
-      <h3>{{link.title | e}}</h3>
-      <div class="url-link">
-        <a href="{{link.url}}" target="_blank">{{link.url}}</a>
-        <button class="copy-btn">Copy &#128279;</button>
-      </div>
-      
-      <p>{{link.desc}}</p>
-      <div class="url-card-buttons">
-        <button class="share-icon" title="Share this URL">&#128279;</button>
-        <button hx-post="/cardedit?id={{loop.index0}}" hx-target="closest .url-card" hx-swap="innerHTML" class="edit-icon" title="Edit this URL">&#9998;</button>
-        <button hx-post="/deleteurl?id={{loop.index0}}" hx-on::after-request="load()" class="delete-icon" title="Delete this URL">&#128465;</button>
-      </div>
-    </div>
 
-    {%endfor%}
-
-    <div class="add-new-btn-container">
-      <button class="add-new-btn" hx-post="/addurlform" hx-target="closest div" hx-swap="outerHTML">Add New URL</button>
-    </div>
-  </main>
-
-  
 </div>
 
 
@@ -142,92 +165,93 @@
 
 <script>
 
-  function filter() {
-    const categoryButtons = document.querySelectorAll('.category-btn');
-    const urlCards = document.querySelectorAll('.url-card');
+    function filter() {
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const urlCards = document.querySelectorAll('.url-card');
 
-    function filterUrlCards(category) {
-      urlCards.forEach(card => {
-        if (category === 'all' || card.dataset.category === category) {
-          card.style.display = 'block';
+        function filterUrlCards(category) {
+            urlCards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', function (e) {
+                if (e.target.classList.contains('delete-category')) {
+                    return; // Don't filter when clicking the delete button
+                }
+                const category = this.dataset.category;
+
+                // Update active button
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+
+                // Filter URL cards
+                filterUrlCards(category);
+            });
+        })
+    }
+    filter()
+
+    function load() {
+        window.location.reload()
+        colsole.log("re")
+    }
+
+    //select buton to share and copy
+    const shareProfileBtn = document.querySelector('.share-btn');
+    const shareIcons = document.querySelectorAll('.share-icon');
+    const copyButtons = document.querySelectorAll('.copy-btn');
+
+
+    shareProfileBtn.addEventListener('click', function () {
+        const profileUrl = window.location.href;
+        shareUrl('Check out my UrlJar profile', profileUrl);
+    });
+
+    // Share URL functionality
+    shareIcons.forEach(icon => {
+        icon.addEventListener('click', function () {
+            const urlCard = this.closest('.url-card');
+            const urlTitle = urlCard.querySelector('h3').textContent;
+            const urlLink = urlCard.querySelector('input').value;
+            shareUrl(urlTitle, urlLink);
+            console.log(urlLink)
+        });
+    });
+
+    function shareUrl(title, url) {
+        if (navigator.share) {
+            navigator.share({
+                title: title,
+                url: url
+            }).then(() => {
+                console.log('Thanks for sharing!');
+            })
+                .catch(console.error);
         } else {
-          card.style.display = 'none';
+            alert(`Share this URL:\nTitle: ${title}\nLink: ${url}`);
         }
-      });
     }
 
-    categoryButtons.forEach(button => {
-      button.addEventListener('click', function (e) {
-        if (e.target.classList.contains('delete-category')) {
-          return; // Don't filter when clicking the delete button
-        }
-        const category = this.dataset.category;
-
-        // Update active button
-        categoryButtons.forEach(btn => btn.classList.remove('active'));
-        this.classList.add('active');
-
-        // Filter URL cards
-        filterUrlCards(category);
-      });
-    })
-  }
-  filter()
-
-  function load(){
-    window.location.reload()
-    colsole.log("re")
-  }
-
-  //select buton to share and copy
-  const shareProfileBtn = document.querySelector('.share-btn');
-  const shareIcons = document.querySelectorAll('.share-icon');
-  const copyButtons = document.querySelectorAll('.copy-btn');
-
-
-  shareProfileBtn.addEventListener('click', function () {
-    const profileUrl = window.location.href;
-    shareUrl('Check out my UrlJar profile', profileUrl);
-  });
-
-  // Share URL functionality
-  shareIcons.forEach(icon => {
-    icon.addEventListener('click', function () {
-      const urlCard = this.closest('.url-card');
-      const urlTitle = urlCard.querySelector('h3').textContent;
-      const urlLink = urlCard.querySelector('a').href;
-      shareUrl(urlTitle, urlLink);
+    // Copy URL functionality
+    copyButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const urlLink = this.previousElementSibling.value;
+            navigator.clipboard.writeText(urlLink).then(() => {
+                
+                setTimeout(() => {
+                    this.style.backgroundColor ='#1ba3e2';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        });
     });
-  });
-
-  function shareUrl(title, url) {
-    if (navigator.share) {
-      navigator.share({
-        title: title,
-        url: url
-      }).then(() => {
-        console.log('Thanks for sharing!');
-      })
-        .catch(console.error);
-    } else {
-      alert(`Share this URL:\nTitle: ${title}\nLink: ${url}`);
-    }
-  }
-
-  // Copy URL functionality
-  copyButtons.forEach(button => {
-    button.addEventListener('click', function () {
-      const urlLink = this.previousElementSibling.href;
-      navigator.clipboard.writeText(urlLink).then(() => {
-        this.textContent = 'Copied!';
-        setTimeout(() => {
-          this.textContent = 'Copy';
-        }, 2000);
-      }).catch(err => {
-        console.error('Failed to copy: ', err);
-      });
-    });
-  });
 </script>
 
 
@@ -236,7 +260,7 @@
 
 
 
- <!-- <script>
+<!-- <script>
     document.addEventListener('DOMContentLoaded', function () {
       const categoryButtons = document.querySelectorAll('.category-btn');
       const urlCards = document.querySelectorAll('.url-card');

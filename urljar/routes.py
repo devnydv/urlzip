@@ -132,7 +132,7 @@ def user(username):
 
             sessionuname = session["username"]
             if sessionuname == username:
-                return render_template("dashboard.html", username = sessionuname, userdata = useralldata) 
+                return render_template("dashtest.html", username = sessionuname, userdata = useralldata) 
             else:  
                 return render_template("profile.html",pname=username, username=sessionuname, userdata = useralldata, logged= True)
         else:
@@ -172,9 +172,9 @@ def terms():
         return render_template("terms.html", uname = "")
 
 # Error handling
-@app.errorhandler(404)
-def page_not_found(e):
-    return redirect(url_for('error_404'))
+# @app.errorhandler(404)
+# def page_not_found(e):
+#     return redirect(url_for('error_404'))
 
 @app.errorhandler(500)
 def internal_server_error(e):
