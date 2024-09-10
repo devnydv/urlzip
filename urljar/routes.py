@@ -132,7 +132,7 @@ def user(username):
 
             sessionuname = session["username"]
             if sessionuname == username:
-                return render_template("dashtest.html", username = sessionuname, userdata = useralldata) 
+                return render_template("dashboard.html", username = sessionuname, userdata = useralldata) 
             else:  
                 return render_template("profile.html",pname=username, username=sessionuname, userdata = useralldata, logged= True)
         else:

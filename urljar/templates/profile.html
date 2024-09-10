@@ -61,12 +61,13 @@
   <main class="url-cards">
     {%for link in userdata[0]["links"]%}
     <div class="url-card" data-category="{{link.cat|title}}">
-      <h3>{{link.title}}</h3>
+      <h3 class="card-title">{{link.title}}</h3>
       <div class="url-link">
-        <a href="{{link.url}}" target="_blank">{{link.url}}</a>
+        <input type="text" class="link-input" value="{{link.url}}" readonly="">
+        
         <button class="copy-btn">Copy</button>
       </div>
-      <p>{{link.desc}}</p>
+      <p class="description">{{link.desc}}</p>
       <div class="url-card-buttons">
         <button class="share-icon" title="Share this URL">&#128279;</button>
 
