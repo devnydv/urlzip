@@ -49,7 +49,7 @@
                 <button class="category-btn" data-category="{{category |title}}" id="{{loop.index0}}"
                     onclick="filter()">
                     {{category |title}}
-                    <span class="delete-category" hx-delete="/catdelete?cat={{category}}" hx-swap="outerHTMl"
+                    <span class="delete-category" hx-delete="/catdelete?cat={{category}}" hx-swap="outerHTML"
                         hx-target="closest div">&times;</span>
                     <!-- <span class="edit-category">&#9998;</span> -->
                 </button>
@@ -68,8 +68,8 @@
     
     <!-- url cards -->
     <main class="url-cards">
-      
-      <div class="add-new-btn-container" >
+
+      <div class="add-new-btn-container" style="margin: 10px;">
         <button class="add-new-btn" hx-post="/addurlform"  hx-target="closest div" hx-swap="outerHTML">Add New
             URL</button>
       </div>
@@ -95,7 +95,7 @@
                 </button>
             </div>
             <div class="categories">
-              <span class="category-tag">cate</span>
+              <span class="category-tag">{{link.cat|title}}</span>
           </div>
             <p class="description">{{link.desc}}</p>
             <div class="url-card-buttons">

@@ -23,7 +23,11 @@ def delete():
   # html form to add category  
 @htmx.route("/addcatdiv")
 def addcatdiv():
-    return '<div class="new-category-input"><form hx-post="/addcat" marhod="POST"  hx-swap="outerHTML" hx-target=".new-category-input"><input type="text" placeholder="Enter new category name" name="cat" ><button id="submitNewCategory">Add</button></form></div>'
+    return '''<div class="new-category-input">
+    <form hx-post="/addcat"  marhod="POST"  hx-swap="outerHTML" hx-target=".new-category-input" >
+    <input type="text" placeholder="Enter new category name" name="cat" >
+    <button id="submitNewCategory"  hx-on:click='load()'>Add</button></form>
+    </div>'''
 
 @htmx.route("/addcat", methods=["GET", 'POST'])
 def addcate():
@@ -38,7 +42,7 @@ def addcate():
                 capitalcat =catval.capitalize()
             #if catval == "":
                 addcat(uname, catval)
-                return f'<div><button class="category-btn" data-category="{capitalcat}" onclick="filter()">{capitalcat}<span class="delete-category" hx-get="/catdelete?cat={catval}" hx-target="closest div"hx-swap="outerHTMl">&times;</span></div><div><button class="add-category-btn" hx-get="/addcatdiv" hx-target="closest div" hx-swap="outerHTML">Add Category</button></div>'
+                return f'<div><button class="category-btn" data-category="{capitalcat}" onclick="filter()">{capitalcat}<span class="delete-category" hx-get="/catdelete?cat={catval}" hx-target="closest div" hx-swap="outerHTMl">&times;</span></div><div><button class="add-category-btn" hx-get="/addcatdiv" hx-target="closest div" hx-swap="outerHTML">Add Category</button></div>'
             else:
                 return '<div><button class="add-category-btn" hx-get="/addcatdiv" hx-target="closest div" hx-swap="outerHTML">Add Category</button></div>', 200
     else:

@@ -36,12 +36,6 @@ def signup():
                                     "desc": "This is your profile link that you can share",
                                     "url": f'https://urljar.vercel.app/user/{username}',
                                     "cat":"seggestion"
-                                },
-                                {
-                                    "title":"Second link for test",
-                                    "desc": "This is your profile link that you can share",
-                                    "url": f'https://urljar.vercel.app/user/{username}',
-                                    "cat":"seggestion"
                                 }
                             ]
                             }

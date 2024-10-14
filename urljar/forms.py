@@ -15,6 +15,7 @@ class SignupForm(Form):
         'Email',
         validators=[
             DataRequired(message="Email is required."),
+            Length(min=3, max=20, message="Username must be between 3 and 30 characters."),
             Email(message="Invalid email address.")
         ]
     )
