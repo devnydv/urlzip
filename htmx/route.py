@@ -131,6 +131,9 @@ def addurl():
                     </svg>
         </button>
       </div>
+      <div class="categories">
+              <span class="category-tag">{cat}</span>
+          </div>
       <p class="description">{desc}</p>
       <div class="url-card-buttons">
         <button class="share-icon" title="Share this URL">&#128279;</button>
