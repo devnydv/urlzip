@@ -4,6 +4,11 @@
         <input type="text" id="title" name="title" placeholder="Title for the URL" value="{{data['arrdata']['title']}}" required>
         <input type="url" name="url" placeholder=" Edit Url" value="{{data['arrdata']['url']}}" required>
         <input type="text" name="desc" placeholder="Edit description" value="{{data['arrdata']['desc']}}" required>
+        <!-- <input type="text" name="cat" disabled value="{{data['arrdata']['cat']}}" > -->
+        <select name="options" id="editCategory" required="">
+            <option value="{{data['arrdata']['cat']}}">{{data['arrdata']['cat']}}</option>
+        </select>
+    
     </div>
     <button class="add-new-btn"> Confirm Edit</button>
 </form>

@@ -64,7 +64,8 @@ def saveedit():
     title = clean(request.form["title"])
     url = clean(request.form["url"])
     desc = clean(request.form["desc"])
-    
+    cat = clean(request.form["options"].capitalize())
+
     edited(uname, title, url,desc, id)
     return f'''
       <h3 class="card-title">{title}</h3>
@@ -74,7 +75,7 @@ def saveedit():
         <button class="copy-btn">Copy</button>
       </div>
       <div class="categories">
-              <span class="category-tag">category-tag</span>
+              <span class="category-tag">{cat}</span>
           </div>
       <p class="description">{desc}</p>
       <div class="url-card-buttons">
