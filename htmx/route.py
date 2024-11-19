@@ -112,9 +112,7 @@ def addurl():
     id = addnew(uname, title, url, desc, cat )
     
     return f'''
-    <div class="add-new-btn-container">
-      <button class="add-new-btn" hx-post="/addurlform" hx-target="closest div" hx-swap="outerHTML">Add New URL</button>
-    </div>
+
     <div class="url-card" data-category="{cat }">
       <h3 class="card-title">{title}</h3>
       <div class="url-link">

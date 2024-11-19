@@ -69,12 +69,42 @@
     <!-- url cards -->
     <main class="url-cards">
 
-      <div class="add-new-btn-container" style="margin: 10px;">
+      <!-- <div class="add-new-btn-container" style="margin: 10px;">
         <button class="add-new-btn" hx-post="/addurlform"  hx-target="closest div" hx-swap="outerHTML">Add New
             URL</button>
-      </div>
+      </div> -->
     
-    
+
+<!-- #exprimentin may cause errors -->
+ <div class="input-url-form" class="url-card">
+<form hx-post="/addurl" hx-swap="afterend" hx-target="closest .input-url-form ">
+  <div class="new-card-input">
+      <input type="text" id="title" name="title" placeholder="Title for the URL" required>
+      <input type="url" name="url" placeholder="Url" required>
+      <input type="text" name="desc" placeholder=" Description for Url" required>
+      <select name="options" id="editCategory" required>
+          <option value="">Select Category</option>
+          {%for category in categories%}
+          <option value="{{category}}">{{category|title}}</option>
+          {%endfor%}
+      </select>
+  </div>
+  <button value="Reset" class="add-new-btn" style="margin-bottom: 1rem;"> Confirm Edit</button>
+</form>
+<!-- <button class="add-new-btn" hx-get="/del" hx-target="closest .url-card" hx-swap="outerHTML" > Cancel</button> -->
+</div>
+
+
+
+
+
+
+
+
+
+
+{% set urls = userdata[0]["links"].reverse()%}
+
         {%for link in userdata[0]["links"]%}
         <div class="url-card" data-category="{{link.cat|title}}">
             <h3 class="card-title">{{link.title | e}}</h3>
@@ -100,9 +130,9 @@
             <p class="description">{{link.desc}}</p>
             <div class="url-card-buttons">
                 <button class="share-icon" title="Share this URL">&#128279;</button>
-                <button hx-post="/cardedit?id={{loop.index0}}" hx-target="closest .url-card" hx-swap="innerHTML"
+                <button hx-post="/cardedit?id={{loop.revindex0}}" hx-target="closest .url-card" hx-swap="innerHTML"
                     class="edit-icon" title="Edit this URL">&#9998;</button>
-                <button hx-post="/deleteurl?id={{loop.index0}}" hx-on::after-request="load()" class="delete-icon"
+                <button hx-post="/deleteurl?id={{loop.revindex0}}" hx-on::after-request="load()" class="delete-icon"
                     title="Delete this URL">&#128465;</button>
             </div>
         </div>
@@ -199,7 +229,7 @@
 
     function load() {
         window.location.reload()
-        colsole.log("re")
+        console.log("re")
     }
 
     //select buton to share and copy

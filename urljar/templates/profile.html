@@ -47,7 +47,7 @@
       {% set categories = userdata[0]["category"]%}
       {%for category in categories%}
       <div>
-        <button class="category-btn" data-category="{{category |title}}" id="{{loop.index0}}" onclick="filter()">
+        <button class="category-btn" data-category="{{category |title}}" id="{{loop.revindex0}}" onclick="filter()">
           {{category |title}}
           <!-- <span class="edit-category">&#9998;</span> -->
         </button>
@@ -59,6 +59,7 @@
   </section>
 
   <main class="url-cards">
+    {% set urls = userdata[0]["links"].reverse()%}
     {%for link in userdata[0]["links"]%}
     <div class="url-card" data-category="{{link.cat|title}}">
       <h3 class="card-title">{{link.title}}</h3>
